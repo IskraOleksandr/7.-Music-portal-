@@ -1,0 +1,69 @@
+﻿@model Музыкальный_портал__Music_portal_.Models.User
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+ 
+<br>
+<div>
+    <div class="dv1">
+
+        <h1 class="h1_n">Удаление пользователя</h1>
+
+        <div class="div_l1 div_l2n1">
+             
+                <div class="div_l2 div_l2n" style="height: max-content">
+                <br />
+                <div class="div_l3n">
+                    <div class="div_l4">
+                        <h3>Вы действительно желаете удалить исполнителя?</h3> 
+                    </div>
+                </div>
+                    <div class="div_l3">
+                        <div class="div_l4">
+                        <label class="label_l1m">@Html.DisplayNameFor(model => model.FirstName)</label>
+                        <p class="p1_n ">@Html.DisplayFor(model => model.FirstName)</p>
+                        </div> 
+                    </div>
+
+                    <div class="div_l3n">
+                        <div class="div_l4">
+                        <label class="label_l1m">@Html.DisplayNameFor(model => model.LastName)</label>
+                        <p class="p1_n ">@Html.DisplayFor(model => model.LastName)</p>
+                        </div> 
+                    </div>
+
+                    <div class="div_l3n">
+                        <div class="div_l4">
+                        <label class="label_l1m">@Html.DisplayNameFor(model => model.Login)</label>
+                        <p class="p1_n ">@Html.DisplayFor(model => model.Login)</p>
+                        </div> 
+                    </div>
+
+                    <div class="div_l3n">
+                        <div class="div_l4">
+                        <label class="label_l1m">@Html.DisplayNameFor(model => model.Email)</label>
+                        <p class="p1_n ">@Html.DisplayFor(model => model.Email)</p>
+                        </div> 
+                    </div>
+
+                    <div class="div_l3n">
+                        <div class="div_l4">
+                        <label class="label_l1m">@Html.DisplayNameFor(model => model.Level)</label>
+                        <p class="p1_n ">@Html.DisplayFor(model => model.Level)</p>
+                        </div> 
+                    </div>
+
+                <form asp-action="Delete">
+                    <input type="hidden" asp-for="Id" />
+                    <div class="div_subm">
+                        <input class="input_subm_del" type="submit" value="Удалить" />
+                    </div>
+                    <a class="a_navigation" asp-action="Index">На главную страницу</a>
+                </form>
+                </div>
+             
+        </div>
+    </div>
+</div>

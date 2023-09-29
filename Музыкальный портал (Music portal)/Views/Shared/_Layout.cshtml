@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Музыкальный портал Music portal</title>
+
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Style.css" asp-append-version="true" />
+
+</head>
+<body>
+    <header>
+        <div class="my_nav">
+            <a asp-controller="Music" asp-action="Index">Музыкальный портал</a>
+
+            @if (Context.Session.GetString("Login") == null)
+            {
+                <a asp-controller="User" asp-action="Register">Регистрация</a>
+                <a style="float: right;" asp-controller="User" asp-action="Login">Вход</a>
+            }
+            else
+            {
+                if (Context.Session.GetInt32("Level") > 0)
+                {
+                    <a asp-controller="Music" asp-action="Create">Добавить клип</a>
+                    
+                    if (Context.Session.GetInt32("Level") == 2)
+                    {
+                        <a asp-controller="MusicStyle" asp-action="Index">Стили</a>
+                        <a asp-controller="User" asp-action="Index">Все участники</a>
+                        <a asp-controller="Singer" asp-action="Index">Исполнители</a>
+                    }
+                }
+
+                <a style="float: right;" asp-controller="Music" asp-action="Logout">Выход</a>
+                <a class="active" style="float: right;">Здравствуйте, @Context.Session.GetString("Login") </a>
+            }
+
+        </div>
+
+    </header>
+    <div class="container body-content">
+        @RenderBody()
+
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+

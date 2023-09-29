@@ -1,0 +1,83 @@
+﻿@model Музыкальный_портал__Music_portal_.Models.Register_Model
+
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br>
+<div>
+    <div class="dv1">
+
+        <h1 class="h1_n">Регистрация </h1>
+
+        <div class="div_l1 div_l2n1">
+            <form asp-action="Register">
+                <div class="div_l2 div_l2n" style="height: max-content">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="div_l3">
+                        <div class="div_l4">
+                            <label asp-for="FirstName" class="label_l1">Имя:</label>
+                            <input asp-for="FirstName" class="input1 " type="text" />
+                        </div>
+                        <span asp-validation-for="FirstName" class="span_error"></span>
+                    </div>
+
+                    <div class="div_l3n">
+                        <div class="div_l4">
+                            <label asp-for="LastName" class="label_l1">Фамилия:</label>
+                            <input asp-for="LastName" class="input1 " type="text" />
+                        </div>
+                        <span asp-validation-for="LastName" class="span_error"></span>
+                    </div>
+
+                    <div class="div_l3n">
+                        <div class="div_l4">
+                            <label asp-for="Login" class="label_l1"></label>
+                            <input asp-for="Login" class="input1 " type="text" />
+                        </div>
+                        <span asp-validation-for="Login" class="span_error"></span>
+                    </div>
+
+                    <div class="div_l3n">
+                        <div class="div_l4">
+                            <label asp-for="Email" class="label_l1"></label>
+                            <input asp-for="Email" class="input1 " type="email" />
+                        </div>
+                        <span asp-validation-for="Email" class="span_error"></span>
+                    </div>
+
+                    <div class="div_l3n">
+                        <div class="div_l4">
+                            <label asp-for="Password" class="label_l1"></label>
+                            <input asp-for="Password" class="input1 " type="password" />
+                        </div>
+                        <span asp-validation-for="Password" class="span_error"></span>
+                    </div>
+                    
+                    <div class="div_l3n">
+                        <div class="div_l4">
+                            <label asp-for="PasswordConfirm" class="label_l1"></label>
+                            <input asp-for="PasswordConfirm" class="input1 " type="password" />
+                        </div>
+                        <span asp-validation-for="PasswordConfirm" class="span_error"></span>
+                    </div>
+
+                    <input asp-for="Level" type="hidden" value="0"/>
+
+                    <div class="div_subm">
+                        <input class="input_subm" type="submit" value="Сохранить" />
+                    </div>
+
+                    <a class="a_navigation" asp-action="Index" asp-controller="Music">На главную страницу</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

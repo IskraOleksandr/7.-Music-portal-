@@ -1,0 +1,73 @@
+﻿@model Музыкальный_портал__Music_portal_.Models.User
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br>
+<div>
+    <div class="dv1">
+
+        <h1 class="h1_n">Редактировать пользователя </h1>
+
+        <div class="div_l1 div_l2n1">
+            <form asp-action="Edit">
+                <div class="div_l2 div_l2n" style="height: max-content">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="div_l3">
+                        <div class="div_l4">
+                            <label asp-for="FirstName" class="label_l1"></label>
+                            <input asp-for="FirstName" class="input1 " type="text" />
+                        </div>
+                        <span asp-validation-for="FirstName" class="span_error"></span>
+                    </div>
+
+                    <div class="div_l3n">
+                        <div class="div_l4">
+                            <label asp-for="LastName" class="label_l1"></label>
+                            <input asp-for="LastName" class="input1 " type="text" />
+                        </div>
+                        <span asp-validation-for="LastName" class="span_error"></span>
+                    </div>
+
+                    <div class="div_l3n">
+                        <div class="div_l4">
+                            <label asp-for="Login" class="label_l1"></label>
+                            <input asp-for="Login" class="input1 " type="text" />
+                        </div>
+                        <span asp-validation-for="Login" class="span_error"></span>
+                    </div>
+
+                    <div class="div_l3n">
+                        <div class="div_l4">
+                            <label asp-for="Email" class="label_l1"></label>
+                            <input asp-for="Email" class="input1 " type="email" />
+                        </div>
+                        <span asp-validation-for="Email" class="span_error"></span>
+                    </div>
+
+                    <div class="div_l3n">
+                        <div class="div_l4">
+                            <label asp-for="Level" class="label_l1"></label>
+                            <input asp-for="Level" class="input1 " type="number" min="0" max="2" placeholder="0" />
+                        </div>
+                        <span asp-validation-for="Level" class="span_error"></span>
+                    </div>
+
+                    <div class="div_subm">
+                        <input class="input_subm" type="submit" value="Сохранить" />
+                    </div>
+
+                    <a class="a_navigation" asp-action="Index">На главную страницу</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

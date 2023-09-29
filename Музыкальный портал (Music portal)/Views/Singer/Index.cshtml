@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Музыкальный_портал__Music_portal_.Models.Singer>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+ 
+<br>
+<div>
+    <div class="dv1">
+        <h1 class="h1_n">Исполнители</h1>
+        <div class="div_l1 div_l2n1">
+            <div class="div_l2 div_l2n wh">
+                <hr style="border:none;width:465px" />
+                <a class="a_bt1 " asp-action="Create">Добавить исполнителя</a>
+
+                <div class="div_l3n wh">
+                    <div class="div_l4 wh">
+                        @if (ViewBag.Singers.Count != 0)
+                        {
+                            <table class="table1">
+                                <thead>
+                                    <tr>
+                                        <th class="th1"> @Html.DisplayNameFor(model => model.SingerName) </th>
+                                        <th class="th1"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in ViewBag.Singers)
+                                    {
+                                        <tr class="tr1">
+                                            <td class="td1"> @item.SingerName </td>
+                                            <td class="td1">
+                                                <a class="a_bt2" asp-action="Edit" asp-route-id="@item.Id">Редактировать</a>
+                                                <a class="a_bt2" asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <h3 style="width:465px;text-align:center">Исполнителей нет</h3>
+                        }
+                    </div>
+                </div>
+                <br /> <br />
+            </div>
+
+        </div>
+    </div>
+</div>

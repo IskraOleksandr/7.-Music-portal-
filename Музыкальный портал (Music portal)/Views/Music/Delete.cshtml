@@ -1,0 +1,38 @@
+﻿@model Музыкальный_портал__Music_portal_.Models.Music
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br>
+<div>
+   
+        <br> <br>
+        <div class="div_m1">
+            <div class="div_mess div_m2">
+            <h1 class="h1_m">@Html.DisplayFor(model => model.Video_Name) (@Html.DisplayFor(model => model.Year))</h1>
+                <video controls loop class="video">
+                    <source src="@Url.Content(Model.Video_URL)" type="video/webm">
+                </video>
+            </div>
+            <div class="div_m3">
+            <h2>@Html.DisplayFor(model => model.Video_Name) (@Html.DisplayFor(model => model.Year))</h2>
+            <p>Исполнитель: @Html.DisplayFor(model => model.Singer.SingerName)</p>
+            <p>Альбом:@Html.DisplayFor(model => model.Album)</p>
+            <p>Стиль: @Html.DisplayFor(model => model.MusicStyle.StyleName)</p>
+            <p>Разместил: @Html.DisplayFor(model => model.User.Login)</p>
+            <p>Дата публикации: @Html.DisplayFor(model => model.VideoDate)</p>
+             
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="Id" />
+                <div class="div_subm">
+                    <input class="input_subm_del1" type="submit" value="Удалить" />
+                </div>
+                <a class="a_navigation a_navigation1" asp-action="Index">На главную страницу</a>
+            </form>
+        </div>
+        </div>
+        <br> <br> <br>
+   
+</div>

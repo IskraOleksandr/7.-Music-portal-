@@ -1,0 +1,89 @@
+﻿@model Музыкальный_портал__Music_portal_.Models.Music
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br>
+<div>
+    <div class="dv1">
+
+        <h1 class="h1_n">Добавление песни </h1>
+
+        <div class="div_l1 div_l2n1">
+            <form asp-action="Create" enctype="multipart/form-data">
+                <div class="div_l2 div_l2n" style="height: max-content">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                     <input type="hidden" asp-for="UserId"/>
+                    @* <input type="hidden" asp-for="SingerId"/> *@
+                    <div class="div_l3">
+                        <div class="div_l4">
+                            <label asp-for="Video_Name" class="label_l1"></label>
+                            <input asp-for="Video_Name" class="input1 " type="text" />
+                        </div>
+                        <span asp-validation-for="Video_Name" class="span_error"></span>
+                    </div>
+
+                    <div class="div_l3n">
+                        <div class="div_l4">
+                            <label asp-for="Album" class="label_l1"></label>
+                            <input asp-for="Album" class="input1 " type="text" />
+                        </div>
+                        <span asp-validation-for="Album" class="span_error"></span>
+                    </div>
+
+                    <div class="div_l3n">
+                        <div class="div_l4">
+                            <label asp-for="Year" class="label_l1"></label>
+                            <input asp-for="Year" class="input1 " type="text" />
+                        </div>
+                        <span asp-validation-for="Year" class="span_error"></span>
+                    </div>
+
+                    <div class="div_l3n">
+                        <div class="div_l4">
+                            <label asp-for="Video_URL" class="label_l1"></label>
+                            <input asp-for="Video_URL" class="input_file div_com div_i" style="float:left" type="file" name="Video_URL" />
+                        </div> 
+                        <span asp-validation-for="Video_URL" class="span_error"></span>
+                    </div>
+
+                    <div class="div_l3n" >
+                        <div class="div_l4">
+                            <label asp-for="MusicStyleId" class="label_l1">Стиль музыки:</label>
+                            <select class="input1 input_range" asp-for="MusicStyleId" asp-items="@ViewBag.Style_List">
+                                <option value="">Виберите стиль музыки</option>
+                            </select>
+                        </div>
+                        <span asp-validation-for="MusicStyleId" class="span_error"></span>
+                    </div>
+                    
+                    <div class="div_l3n">
+                        <div class="div_l4">
+                            <label asp-for="SingerId" class="label_l1">Исполнитель:</label>
+                            <select class="input1 input_range" asp-for="SingerId" asp-items="@ViewBag.Singer_List">
+                                <option value="">Виберите исполнителя</option>
+                            </select>
+                        </div>
+                        <span asp-validation-for="SingerId" class="span_error"></span>
+                    </div>
+
+                    <div class="div_subm">
+                        <input class="input_subm" type="submit" value="Сохранить" />
+                    </div>
+
+                    <div>
+                        <a class="a_navigation" asp-action="Index">На главную страницу</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

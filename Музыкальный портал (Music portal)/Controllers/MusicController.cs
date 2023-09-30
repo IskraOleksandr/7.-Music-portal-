@@ -82,7 +82,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!FilmExists(music.Id))
+                if (!MusicExists(music.Id))
                 {
                     return NotFound();
                 }
@@ -162,7 +162,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!FilmExists(music.Id))
+                if (!MusicExists(music.Id))
                 {
                     return NotFound();
                 }
@@ -198,7 +198,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
             return RedirectToAction("Index");
         }
 
-        private bool FilmExists(int id)
+        private bool MusicExists(int id)
         {
             return (_context.Musics?.Any(e => e.Id == id)).GetValueOrDefault();
         }

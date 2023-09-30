@@ -29,8 +29,7 @@ namespace Музыкальный_портал__Music_portal_.Models
         public DateTime VideoDate { get; set; }
         
         public virtual MusicStyle MusicStyle { get; set; }
-
-        //[Display(Name = "Разместил/Изменил:")]
+         
         public virtual User User { get; set; }
         
         public virtual Singer Singer { get; set; }

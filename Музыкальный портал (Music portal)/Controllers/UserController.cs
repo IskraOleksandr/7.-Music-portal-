@@ -135,7 +135,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
          
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,Login,Email,Level")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,Login,Email,Password,Salt,Level")] User user)
         {
             if (id != user.Id)
             {
@@ -145,7 +145,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
             if (ModelState.IsValid)
             {
                 try
-                {
+                { 
                     _context.Update(user);
                     await _context.SaveChangesAsync();
                 }

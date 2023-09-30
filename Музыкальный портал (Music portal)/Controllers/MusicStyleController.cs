@@ -12,28 +12,21 @@ namespace Музыкальный_портал__Music_portal_.Controllers
         {
             _context = context;
         }
-
-        // GET: Students
-        //public async Task<IActionResult> Index()
-        //{
-        //    return View(await _context.MusicStyles.ToListAsync());
-        //}
+         
         public async Task<IActionResult> Index()
         {
             IEnumerable<MusicStyle> styles = await Task.Run(() => _context.MusicStyles.ToListAsync());
             ViewBag.MusicStyles = styles;
             return View();
-            //return _context.MusicStyles != null ?
-            //            View(await ) :
-            //            Problem("Entity set 'FilmContext.Films'  is null.");
+            
         }
-        // GET: Students/Create
+         
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Students/Create
+         
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,StyleName")] MusicStyle style)
@@ -47,7 +40,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
             return View(style);
         }
 
-        // GET: Students/Edit/5
+        
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -55,20 +48,20 @@ namespace Музыкальный_портал__Music_portal_.Controllers
                 return NotFound();
             }
 
-            var student = await _context.MusicStyles.SingleOrDefaultAsync(m => m.Id == id);
-            if (student == null)
+            var style = await _context.MusicStyles.SingleOrDefaultAsync(m => m.Id == id);
+            if (style == null)
             {
                 return NotFound();
             }
-            return View(student);
+            return View(style);
         }
 
-        // POST: Students/Edit/5
+         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,StyleName")] MusicStyle student)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,StyleName")] MusicStyle style)
         {
-            if (id != student.Id)
+            if (id != style.Id)
             {
                 return NotFound();
             }
@@ -77,12 +70,12 @@ namespace Музыкальный_портал__Music_portal_.Controllers
             {
                 try
                 {
-                    _context.Update(student);
+                    _context.Update(style);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MusicStyleExists(student.Id))
+                    if (!MusicStyleExists(style.Id))
                     {
                         return NotFound();
                     }
@@ -93,10 +86,10 @@ namespace Музыкальный_портал__Music_portal_.Controllers
                 }
                 return RedirectToAction("Index");
             }
-            return View(student);
+            return View(style);
         }
 
-        // GET: Students/Delete/5
+         
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -104,17 +97,17 @@ namespace Музыкальный_портал__Music_portal_.Controllers
                 return NotFound();
             }
 
-            var student = await _context.MusicStyles
+            var style = await _context.MusicStyles
                 .SingleOrDefaultAsync(m => m.Id == id);
-            if (student == null)
+            if (style == null)
             {
                 return NotFound();
             }
 
-            return View(student);
+            return View(style);
         }
 
-        // POST: Students/Delete/5
+        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

@@ -20,13 +20,13 @@ namespace Музыкальный_портал__Music_portal_.Controllers
             return View();
         }
 
-        // GET: Students/Create
+         
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Students/Create
+         
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,SingerName")] Singer singer)
@@ -40,7 +40,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
             return View(singer);
         }
 
-        // GET: Students/Edit/5
+        
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -56,7 +56,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
             return View(singer);
         }
 
-        // POST: Students/Edit/5
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,SingerName")] Singer singer)
@@ -89,7 +89,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
             return View(singer);
         }
 
-        // GET: Students/Delete/5
+         
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -107,7 +107,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
             return View(singer);
         }
 
-        // POST: Students/Delete/5
+         
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

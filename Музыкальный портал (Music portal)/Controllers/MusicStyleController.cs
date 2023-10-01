@@ -1,21 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Музыкальный_портал__Music_portal_.Models;
+using Музыкальный_портал__Music_portal_.Repository;
 
 namespace Музыкальный_портал__Music_portal_.Controllers
 {
     public class MusicStyleController : Controller
     {
-        private readonly Music_PortalContext _context;
+        IRepository _repository;
 
-        public MusicStyleController(Music_PortalContext context)
+        public MusicStyleController(IRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
          
         public async Task<IActionResult> Index()
         {
-            IEnumerable<MusicStyle> styles = await Task.Run(() => _context.MusicStyles.ToListAsync());
+            IEnumerable<MusicStyle> styles = await Task.Run(() => _repository.GetMusicStyles());
             ViewBag.MusicStyles = styles;
             return View();
             
@@ -33,8 +34,8 @@ namespace Музыкальный_портал__Music_portal_.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(style);
-                await _context.SaveChangesAsync();
+                await _repository.AddMusicStyle(style);
+                await _repository.Save();
                 return RedirectToAction("Index");
             }
             return View(style);
@@ -43,12 +44,12 @@ namespace Музыкальный_портал__Music_portal_.Controllers
         
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
+            if (id == null || await _repository.GetMusicStyles() == null)
             {
                 return NotFound();
             }
 
-            var style = await _context.MusicStyles.SingleOrDefaultAsync(m => m.Id == id);
+            var style = await _repository.GetMusicStyleById((int)id);
             if (style == null)
             {
                 return NotFound();
@@ -61,7 +62,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,StyleName")] MusicStyle style)
         {
-            if (id != style.Id)
+            if (id != style.Id || await _repository.GetMusicStyles() == null)
             {
                 return NotFound();
             }
@@ -70,12 +71,12 @@ namespace Музыкальный_портал__Music_portal_.Controllers
             {
                 try
                 {
-                    _context.Update(style);
-                    await _context.SaveChangesAsync();
+                    _repository.UpdateMusicStyle(style);
+                    await _repository.Save();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MusicStyleExists(style.Id))
+                    if (!await MusicStyleExists(style.Id))
                     {
                         return NotFound();
                     }
@@ -92,13 +93,12 @@ namespace Музыкальный_портал__Music_portal_.Controllers
          
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
+            if (id == null || await _repository.GetMusicStyles() == null)
             {
                 return NotFound();
             }
 
-            var style = await _context.MusicStyles
-                .SingleOrDefaultAsync(m => m.Id == id);
+            var style = await _repository.GetMusicStyleById((int)id);
             if (style == null)
             {
                 return NotFound();
@@ -107,20 +107,30 @@ namespace Музыкальный_портал__Music_portal_.Controllers
             return View(style);
         }
 
-        
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var style = await _context.MusicStyles.SingleOrDefaultAsync(m => m.Id == id);
-            _context.MusicStyles.Remove(style);
-            await _context.SaveChangesAsync();
+            if (await _repository.GetMusicStyles() == null)
+            {
+                return Problem("Entity set 'Music_PortalContext.MusicStyles'  is null.");
+            }
+
+            var style = await _repository.GetMusicStyleById(id);
+            if (style != null)
+            {
+                await _repository.DeleteMusicStyle(id);
+            }
+
+            await _repository.Save();
             return RedirectToAction("Index");
         }
 
-        private bool MusicStyleExists(int id)
+        private async Task<bool> MusicStyleExists(int id)
         {
-            return _context.MusicStyles.Any(e => e.Id == id);
+            List<MusicStyle> list = await _repository.GetMusicStyles();
+            return (list?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

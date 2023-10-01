@@ -76,7 +76,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!SingerExists(singer.Id))
+                    if (!await SingerExists(singer.Id))
                     {
                         return NotFound();
                     }

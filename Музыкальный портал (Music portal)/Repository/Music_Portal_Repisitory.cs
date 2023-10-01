@@ -22,10 +22,7 @@ namespace Музыкальный_портал__Music_portal_.Repository
             var user = await _context.Users.SingleOrDefaultAsync(m => m.Id == id);
             return user;
         }
-        public async Task Save()
-        {
-            await _context.SaveChangesAsync();
-        }
+       
         public async Task<List<User>> GetUsers()
         {
             var users = await _context.Users.ToListAsync();
@@ -42,11 +39,47 @@ namespace Музыкальный_портал__Music_portal_.Repository
             _context.Entry(user).State = EntityState.Modified;
         }
 
-        public async Task Delete(int id)
+        public async Task DeleteUser(int id)
         {
-            User? c = await _context.Users.FindAsync(id);
-            if (c != null)
-                _context.Users.Remove(c);
+            User? u = await _context.Users.FindAsync(id);
+            if (u != null)
+                _context.Users.Remove(u);
+        }
+
+        //Singer
+        public async Task<Singer> GetSingerById(int id)
+        {
+            var singer = await _context.Singers.SingleOrDefaultAsync(m => m.Id == id);
+            return singer;
+        }
+
+        public async Task<List<Singer>> GetSingers()
+        {
+            var singers = await _context.Singers.ToListAsync();
+            return singers;
+        }
+
+        public async Task AddSinger(Singer singer)
+        {
+            await _context.Singers.AddAsync(singer);
+        }
+
+        public void UpdateSinger(Singer singer)
+        {
+            _context.Entry(singer).State = EntityState.Modified;
+        }
+
+        public async Task DeleteSinger(int id)
+        {
+            Singer? s = await _context.Singers.FindAsync(id);
+            if (s != null)
+                _context.Singers.Remove(s);
+        }
+
+        //All
+        public async Task Save()
+        {
+            await _context.SaveChangesAsync();
         }
     }
 }

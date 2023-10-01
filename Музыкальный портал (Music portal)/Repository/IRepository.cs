@@ -10,7 +10,14 @@ namespace Музыкальный_портал__Music_portal_.Repository
         Task<List<User>> GetUsers();
         Task AddUser(User user);
         void UpdateUser(User user);
-        Task Delete(int id);
+        Task DeleteUser(int id);
+
+        //Singer
+        Task<Singer> GetSingerById(int id);
+        Task<List<Singer>> GetSingers();
+        Task AddSinger(Singer singer);
+        void UpdateSinger(Singer singer);
+        Task DeleteSinger(int id);
 
         //All
         Task Save();

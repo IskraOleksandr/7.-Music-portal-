@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Музыкальный_портал__Music_portal_.Models;
+using Музыкальный_портал__Music_portal_.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +17,7 @@ builder.Services.AddDbContext<Music_PortalContext>(options => options.UseSqlServ
 
 // Добавляем сервисы MVC
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddScoped<IRepository, Music_Portal_Repisitory>();
 
 var app = builder.Build();
 app.UseSession();   // Добавляем middleware-компонент для работы с сессиями

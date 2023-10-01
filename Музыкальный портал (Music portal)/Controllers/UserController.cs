@@ -16,7 +16,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
             _repository = repository;
         }
         public async Task<IActionResult> Index()
-        {
+        { 
             return View(await _repository.GetUsers());
         }
          

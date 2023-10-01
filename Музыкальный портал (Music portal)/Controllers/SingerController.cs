@@ -1,21 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Музыкальный_портал__Music_portal_.Models;
+using Музыкальный_портал__Music_portal_.Repository;
 
 namespace Музыкальный_портал__Music_portal_.Controllers
 {
     public class SingerController : Controller
     {
-        private readonly Music_PortalContext _context;
+        IRepository _repository;
 
-        public SingerController(Music_PortalContext context)
+        public SingerController(IRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         public async Task<IActionResult> Index()
         {
-            IEnumerable<Singer> singers = await Task.Run(() => _context.Singers.ToListAsync());
+            IEnumerable<Singer> singers = await Task.Run(() => _repository.GetSingers());
             ViewBag.Singers = singers;
             return View();
         }
@@ -33,8 +34,8 @@ namespace Музыкальный_портал__Music_portal_.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(singer);
-                await _context.SaveChangesAsync();
+                await _repository.AddSinger(singer);
+                await _repository.Save();
                 return RedirectToAction("Index");
             }
             return View(singer);
@@ -43,12 +44,12 @@ namespace Музыкальный_портал__Music_portal_.Controllers
         
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
+            if (id == null || await _repository.GetSingers() == null)
             {
                 return NotFound();
             }
 
-            var singer = await _context.Singers.SingleOrDefaultAsync(m => m.Id == id);
+            var singer = await _repository.GetSingerById((int)id);
             if (singer == null)
             {
                 return NotFound();
@@ -70,8 +71,8 @@ namespace Музыкальный_портал__Music_portal_.Controllers
             {
                 try
                 {
-                    _context.Update(singer);
-                    await _context.SaveChangesAsync();
+                    _repository.UpdateSinger(singer);
+                    await _repository.Save();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -92,13 +93,12 @@ namespace Музыкальный_портал__Music_portal_.Controllers
          
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
+            if (id == null || await _repository.GetSingers() == null)
             {
                 return NotFound();
             }
 
-            var singer = await _context.Singers
-                .SingleOrDefaultAsync(m => m.Id == id);
+            var singer = await _repository.GetSingerById((int)id);
             if (singer == null)
             {
                 return NotFound();
@@ -107,20 +107,29 @@ namespace Музыкальный_портал__Music_portal_.Controllers
             return View(singer);
         }
 
-         
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var singer = await _context.Singers.SingleOrDefaultAsync(m => m.Id == id);
-            _context.Singers.Remove(singer);
-            await _context.SaveChangesAsync();
+            if (await _repository.GetSingers() == null)
+            {
+                return Problem("Entity set 'Music_PortalContext.Singers'  is null.");
+            }
+
+            var singer = await _repository.GetSingerById(id);
+            if (singer != null)
+            {
+                await _repository.DeleteSinger(id);
+            }
+
+            await _repository.Save();
             return RedirectToAction("Index");
         }
 
-        private bool SingerExists(int id)
+        private async Task<bool> SingerExists(int id)
         {
-            return _context.Singers.Any(e => e.Id == id);
+            List<Singer> list = await _repository.GetSingers();
+            return (list?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

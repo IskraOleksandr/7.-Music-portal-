@@ -124,7 +124,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
          
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
+            if (id == null || await _repository.GetUsers() == null)
             {
                 return NotFound();
             }
@@ -197,7 +197,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
             var user = await _repository.GetUserById(id);
             if (user != null)
             {
-                await _repository.Delete(id);
+                await _repository.DeleteUser(id);
             }
 
             await _repository.Save();

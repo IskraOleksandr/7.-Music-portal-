@@ -3,24 +3,24 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using Музыкальный_портал__Music_portal_.Models;
+using Музыкальный_портал__Music_portal_.Repository;
 
 namespace Музыкальный_портал__Music_portal_.Controllers
 {
     public class MusicController : Controller
     {
-        private readonly Music_PortalContext _context;
-
+        IRepository _repository; 
         private readonly IWebHostEnvironment _appEnvironment;
 
-        public MusicController(Music_PortalContext context, IWebHostEnvironment appEnvironment)
+        public MusicController(IRepository repository, IWebHostEnvironment webHostEnvironment)
         {
-            _context = context;
-            _appEnvironment = appEnvironment;
+            _repository = repository;
+            _appEnvironment = webHostEnvironment;
         }
 
         public async Task<IActionResult> Index()
         {
-            IEnumerable<Music> singers = await Task.Run(() => _context.Musics.Include(u => u.User).Include(u => u.MusicStyle).Include(u => u.Singer));
+            IEnumerable<Music> singers = await Task.Run(() => _repository.GetMusics());
             ViewBag.Musics = singers;
             return View("Index");
         }
@@ -32,10 +32,10 @@ namespace Музыкальный_портал__Music_portal_.Controllers
         }
 
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            var styles = _context.MusicStyles.ToList();
-            var singers = _context.Singers.ToList();
+            var styles = await _repository.GetMusicStyles();
+            var singers = await _repository.GetSingers();
 
             ViewBag.Style_List = new SelectList(styles, "Id", "StyleName");
             ViewBag.Singer_List = new SelectList(singers, "Id", "SingerName");
@@ -52,13 +52,13 @@ namespace Музыкальный_портал__Music_portal_.Controllers
                 return RedirectToAction("Login", "User");
 
 
-            var us = await _context.Users.SingleOrDefaultAsync(u => u.Login == user_login);
+            var us = await _repository.GetUser(user_login);
             music.User = us;
 
-            var style = await _context.MusicStyles.SingleOrDefaultAsync(u => u.Id == music.MusicStyleId);
+            var style = await _repository.GetMusicStyleById(music.MusicStyleId);
             music.MusicStyle = style;
 
-            var singer = await _context.Singers.SingleOrDefaultAsync(u => u.Id == music.SingerId);
+            var singer = await _repository.GetSingerById(music.SingerId);
             music.Singer = singer;
 
             music.UserId = us.Id;
@@ -76,13 +76,12 @@ namespace Музыкальный_портал__Music_portal_.Controllers
                     music.Video_URL = "~" + file_path;
                 }
 
-
-                _context.Add(music);
-                await _context.SaveChangesAsync();
+                await _repository.AddMusic(music);
+                await _repository.Save();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MusicExists(music.Id))
+                if (!await MusicExists(music.Id))
                 {
                     return NotFound();
                 }
@@ -96,19 +95,19 @@ namespace Музыкальный_портал__Music_portal_.Controllers
 
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Musics == null)
+            if (id == null || await _repository.GetMusics() == null)
             {
                 return NotFound();
             }
 
-            var music = await _context.Musics.FindAsync(id);
+            var music = await _repository.GetMusicById((int)id);
             if (music == null)
             {
                 return NotFound();
             }
 
-            var styles = _context.MusicStyles.ToList();
-            var singers = _context.Singers.ToList();
+            var styles = await _repository.GetMusicStyles();
+            var singers = await _repository.GetSingers();
 
             ViewBag.Style_List = new SelectList(styles, "Id", "StyleName");
             ViewBag.Singer_List = new SelectList(singers, "Id", "SingerName");
@@ -130,9 +129,9 @@ namespace Музыкальный_портал__Music_portal_.Controllers
 
                 var user_login = HttpContext.Session.GetString("Login");
 
-                var style = await _context.MusicStyles.SingleOrDefaultAsync(u => u.Id == music.MusicStyleId);
-                var singer = await _context.Singers.SingleOrDefaultAsync(u => u.Id == music.SingerId);
-                var us = await _context.Users.SingleOrDefaultAsync(u => u.Login == user_login);
+                var style = await _repository.GetMusicStyleById(music.MusicStyleId);
+                var singer = await _repository.GetSingerById(music.SingerId);
+                var us = await _repository.GetUser(user_login);
 
                 music.MusicStyle = style;
                 music.Singer = singer;
@@ -154,15 +153,15 @@ namespace Музыкальный_портал__Music_portal_.Controllers
                 else
                 {
                     ModelState.AddModelError("", "Выберите файл для изменения песни!");
-                    return View();//
+                    return View();
                 }
 
-                _context.Update(music);
-                await _context.SaveChangesAsync();
+                 _repository.UpdateMusic(music);
+                await _repository.Save();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MusicExists(music.Id))
+                if (!await MusicExists(music.Id))
                 {
                     return NotFound();
                 }
@@ -173,13 +172,12 @@ namespace Музыкальный_портал__Music_portal_.Controllers
 
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
+            if (id == null || await _repository.GetMusics() == null)
             {
                 return NotFound();
             }
 
-            var music = await _context.Musics
-                .SingleOrDefaultAsync(m => m.Id == id);
+            var music = await _repository.GetMusicById((int)id);
             if (music == null)
             {
                 return NotFound();
@@ -188,19 +186,30 @@ namespace Музыкальный_портал__Music_portal_.Controllers
             return View(music);
         }
 
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var music = await _context.Musics.SingleOrDefaultAsync(m => m.Id == id);
-            _context.Musics.Remove(music);
-            await _context.SaveChangesAsync();
+            if (await _repository.GetMusics() == null)
+            {
+                return Problem("Entity set 'Music_PortalContext.Musics'  is null.");
+            }
+
+            var music = await _repository.GetMusicById(id);
+            if (music != null)
+            {
+                await _repository.DeleteMusic(id);
+            }
+
+            await _repository.Save();
             return RedirectToAction("Index");
         }
 
-        private bool MusicExists(int id)
+        private async Task<bool> MusicExists(int id)
         {
-            return (_context.Musics?.Any(e => e.Id == id)).GetValueOrDefault();
+            List<Music> list = await _repository.GetMusics();
+            return (list?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

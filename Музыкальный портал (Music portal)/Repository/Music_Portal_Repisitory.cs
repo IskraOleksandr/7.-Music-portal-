@@ -115,8 +115,8 @@ namespace Музыкальный_портал__Music_portal_.Repository
 
         public async Task<List<Music>> GetMusics()
         {
-            var musics = await _context.Musics.ToListAsync();
-            return musics;
+            var musics =  _context.Musics.Include(u => u.User).Include(u => u.MusicStyle).Include(u => u.Singer);
+            return await musics.ToListAsync();
         }
 
         public async Task AddMusic(Music music)
@@ -135,6 +135,7 @@ namespace Музыкальный_портал__Music_portal_.Repository
             if (m != null)
                 _context.Musics.Remove(m);
         }
+
 
         //All
         public async Task Save()

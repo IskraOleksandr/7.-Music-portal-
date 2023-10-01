@@ -34,12 +34,14 @@ namespace Музыкальный_портал__Music_portal_.Models
         
         public virtual Singer Singer { get; set; }
 
+        [Required(ErrorMessage = "Поле стиля должно быть установлено.")]
         [Display(Name = "Стиль:")]
         public int MusicStyleId { get; set; }
 
         [Display(Name = "Пользователь:")]
         public int UserId { get; set; }
 
+        [Required(ErrorMessage = "Поле исполнителя должно быть установлено.")]
         [Display(Name = "Исполнитель:")]
         public int SingerId { get; set; }
     }

@@ -62,7 +62,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,StyleName")] MusicStyle style)
         {
-            if (id != style.Id || await _repository.GetMusicStyles() == null)
+            if (id != style.Id)
             {
                 return NotFound();
             }

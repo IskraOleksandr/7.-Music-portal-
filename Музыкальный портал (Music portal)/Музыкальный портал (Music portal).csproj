@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\Music\" />
+    <Folder Include="wwwroot\Music\" />
   </ItemGroup>
 
 </Project>

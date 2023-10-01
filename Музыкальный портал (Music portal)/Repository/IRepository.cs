@@ -26,6 +26,13 @@ namespace Музыкальный_портал__Music_portal_.Repository
         void UpdateMusicStyle(MusicStyle style);
         Task DeleteMusicStyle(int id);
 
+        //Music
+        Task<Music> GetMusicById(int id);
+        Task<List<Music>> GetMusics();
+        Task AddMusic(Music music);
+        void UpdateMusic(Music music);
+        Task DeleteMusic(int id);
+
         //All
         Task Save();
     }

@@ -76,6 +76,36 @@ namespace Музыкальный_портал__Music_portal_.Repository
                 _context.Singers.Remove(s);
         }
 
+        //MusicStyle
+        public async Task<MusicStyle> GetMusicStyleById(int id)
+        {
+            var style = await _context.MusicStyles.SingleOrDefaultAsync(m => m.Id == id);
+            return style;
+        }
+
+        public async Task<List<MusicStyle>> GetMusicStyles()
+        {
+            var styles = await _context.MusicStyles.ToListAsync();
+            return styles;
+        }
+
+        public async Task AddMusicStyle(MusicStyle style)
+        {
+            await _context.MusicStyles.AddAsync(style);
+        }
+
+        public void UpdateMusicStyle(MusicStyle style)
+        {
+            _context.Entry(style).State = EntityState.Modified;
+        }
+
+        public async Task DeleteMusicStyle(int id)
+        {
+            MusicStyle? ms = await _context.MusicStyles.FindAsync(id);
+            if (ms != null)
+                _context.MusicStyles.Remove(ms);
+        }
+
         //All
         public async Task Save()
         {

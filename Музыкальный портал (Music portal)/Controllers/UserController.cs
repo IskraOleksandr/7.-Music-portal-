@@ -3,20 +3,21 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using System.Text;
 using Музыкальный_портал__Music_portal_.Models;
+using Музыкальный_портал__Music_portal_.Repository;
 
 namespace Музыкальный_портал__Music_portal_.Controllers
 {
     public class UserController : Controller
     {
-        private readonly Music_PortalContext _context;
+        IRepository _repository;
 
-        public UserController(Music_PortalContext context)
+        public UserController(IRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Users.ToListAsync());
+            return View(await _repository.GetUsers());
         }
          
         public ActionResult Login()
@@ -26,22 +27,23 @@ namespace Музыкальный_портал__Music_portal_.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Login(Login_Model logon)
+        public async Task<IActionResult> Login(Login_Model logon)
         {
             if (ModelState.IsValid)
             {
-                if (_context.Users.ToList().Count == 0)
+                var users = await _repository.GetUsers();
+                if (users.Count == 0)
                 {
                     ModelState.AddModelError("", "Не коректный логин или пароль!");
                     return View(logon);
                 }
-                var users = _context.Users.Where(a => a.Login == logon.Login);
+                var users_t = users.Where(a => a.Login == logon.Login);
                 if (users.ToList().Count == 0)
                 {
                     ModelState.AddModelError("", "Не коректный логин или пароль!");
                     return View(logon);
                 }
-                var user = users.First();
+                var user = users_t.First();
                 string? salt = user.Salt;
 
                 byte[] password = Encoding.Unicode.GetBytes(salt + logon.Password);//переводим пароль в байт-массив  
@@ -74,7 +76,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Register(Register_Model reg)
+        public async Task<IActionResult> Register(Register_Model reg)
         {
             if (reg.Login == "admin")
                 ModelState.AddModelError("Login", "admin - запрещенный логин");
@@ -110,8 +112,10 @@ namespace Музыкальный_портал__Music_portal_.Controllers
                 user.Password = hash.ToString();
                 user.Salt = salt;
                 user.Level = reg.Level;
-                _context.Users.Add(user);
-                _context.SaveChanges();
+
+                await _repository.AddUser(user);
+                await _repository.Save();
+                
                 return RedirectToAction("Login");
             }
 
@@ -125,7 +129,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
                 return NotFound();
             }
 
-            var user = await _context.Users.SingleOrDefaultAsync(m => m.Id == id);
+            var user = await _repository.GetUserById((int)id);
             if (user == null)
             {
                 return NotFound();
@@ -146,12 +150,12 @@ namespace Музыкальный_портал__Music_portal_.Controllers
             {
                 try
                 { 
-                    _context.Update(user);
-                    await _context.SaveChangesAsync();
+                     _repository.UpdateUser(user);
+                    await _repository.Save();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UserExists(user.Id))
+                    if (!await UserExists(user.Id))
                     {
                         return NotFound();
                     }
@@ -167,13 +171,12 @@ namespace Музыкальный_портал__Music_portal_.Controllers
          
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
+            if (id == null || await _repository.GetUsers() == null)
             {
                 return NotFound();
             }
 
-            var user = await _context.Users
-                .SingleOrDefaultAsync(m => m.Id == id);
+            var user = await _repository.GetUserById((int)id);
             if (user == null)
             {
                 return NotFound();
@@ -186,15 +189,25 @@ namespace Музыкальный_портал__Music_portal_.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var user = await _context.Users.SingleOrDefaultAsync(m => m.Id == id);
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
+            if (await _repository.GetUsers() == null)
+            {
+                return Problem("Entity set 'Music_PortalContext.Students'  is null.");
+            }
+
+            var user = await _repository.GetUserById(id);
+            if (user != null)
+            {
+                await _repository.Delete(id);
+            }
+
+            await _repository.Save();
             return RedirectToAction("Index");
         }
 
-        private bool UserExists(int id)
+        private async Task<bool> UserExists(int id)
         {
-            return _context.Users.Any(e => e.Id == id);
+            List<User> list = await _repository.GetUsers();
+            return (list?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
         [AcceptVerbs("Get", "Post")]

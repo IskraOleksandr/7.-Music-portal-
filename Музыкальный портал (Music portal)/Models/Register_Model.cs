@@ -31,7 +31,7 @@ namespace Музыкальный_портал__Music_portal_.Models
         [StringLength(20, MinimumLength = 3, ErrorMessage = "Длина пароля должна быть от 3 до 20 символов")]
         public string? Password { get; set; }
 
-        [Required(ErrorMessage = "Поле повторения пароля должно быть установлено.")]
+        [Required(ErrorMessage = "Поле подтверждения пароля является обязательным.")]
         [Display(Name = "Повторить пароль:")]
         [Compare("Password", ErrorMessage = "Passwords do not match")]
         [DataType(DataType.Password)]

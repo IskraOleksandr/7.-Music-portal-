@@ -4,7 +4,32 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<header>
+    <div class="my_nav">
+        <a asp-controller="Music" asp-action="Index">Музыкальный портал</a>
+        @if (Context.Session.GetString("Login") == null)
+        {
+            <a data_dialog_title="Register model" id="RegisterDialog" asp-controller="User" asp-action="Register">Регистрация</a>
+            <a style="float: right;" asp-controller="User" asp-action="Login">Вход</a>
+        }
+        else
+        {
+            if (Context.Session.GetInt32("Level") > 0)
+            {
+                <a asp-controller="Music" asp-action="Create">Добавить клип</a>
 
+                if (Context.Session.GetInt32("Level") == 2)
+                {
+                    <a asp-controller="MusicStyle" asp-action="Index">Стили</a>
+                    <a asp-controller="User" asp-action="Index">Все участники</a>
+                    <a asp-controller="Singer" asp-action="Index">Исполнители</a>
+                }
+            }
+            <a style="float: right;" asp-controller="Music" asp-action="Logout">Выход</a>
+            <a class="active" style="float: right;">Здравствуйте, @Context.Session.GetString("Login") </a>
+        }
+    </div>
+</header>
 <br>
 <div>
     @foreach (var item in ViewBag.Musics)
@@ -34,3 +59,122 @@
         <br> <br> <br>
     }
 </div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+
+            $(".viewDialog").on("click", function (e) {
+                e.preventDefault();
+
+                $("<div></div>")
+                    .addClass("dialog")
+                    .appendTo("body")
+                    .dialog({
+                        title: $(this).attr("data-dialog-title"),
+                        close: function () { $(this).remove() },
+                        modal: true
+                    })
+                    .load(this.href);
+            });
+
+            $("#RegisterDialog").on("click", function (e) {
+                e.preventDefault();
+
+                $("<div id='dialogContent' style='width: 10px'></div>")
+                    .addClass("dialog")
+                    .appendTo("body")
+                    .load(this.href)
+                    .dialog({
+                        title: "Регистрация" ,
+                        close: function () { $(this).remove() },
+                        width: "420px", dialogClass: 'myTitleClass',
+                        resizable: false,
+                        modal: true,
+                        buttons: [{
+                            class: "input_subm",
+                            text: "Сохранить",
+                            click: function () {
+                                $.ajax({
+                                    url: "@Url.Action("Register", "User")",
+                                    type: "POST",
+                                    data: $('form').serialize(),
+                                    datatype: "json",
+                                    success: function (result) {
+                                        $("#dialogContent").html(result);
+                                    }
+                                });
+                            }
+                        }]
+                    });
+            });
+
+            // $("#LoginDialog").on("click", function (e) {
+            //     e.preventDefault();
+
+            //     $("<div id='dialogContent'></div>")
+            //         .addClass("dialog")
+            //         .appendTo("body")
+            //         .load(this.href)
+            //         .dialog({
+            //             title: $(this).attr("data-dialog-title"),
+            //             close: function () { $(this).remove() },
+            //             width: "400px",
+            //             resizable: false,
+            //             modal: true,
+            //             buttons: [{
+            //                 class: "input_subm",
+            //                 text: "Войти",
+            //                 click: function () {
+            //                     $.ajax({
+            //                         url: "@Url.Action("Login", "User")",
+            //                         type: "POST",
+            //                         data: $('form').serialize(),
+            //                         datatype: "json",
+            //                         success: function (result) {
+            //                             $("#dialogContent").html(result);
+            //                         }
+            //                     });
+            //                 }
+            //             }]
+            //         });
+            // });
+
+
+            // $("#addMessageDialog").on("click", function (e) {
+            //     e.preventDefault();
+
+            //     $("<div id='dialogContent'></div>")
+            //         .addClass("dialog")
+            //         .appendTo("body")
+            //         .load(this.href)
+            //         .dialog({
+            //             title: $(this).attr("data-dialog-title"),
+            //             close: function () { $(this).remove() },
+            //             width: "500px",
+            //             resizable: false,
+            //             modal: true,
+            //             buttons: [{
+            //                 class: "input_subm",
+            //                 text: "Отправить",
+            //                 click: function () {
+            //                     $.ajax({
+            //                         url: "@Url.Action("addMessage", "Message")",
+            //                         type: "POST",
+            //                         data: $('form').serialize(),
+            //                         datatype: "json",
+            //                         success: function (result) {
+            //                             $("#dialogContent").html(result);
+            //                             alert("Сообщение успешно добавлено!");
+            //                         }
+            //                     });
+            //                 }
+            //             }]
+            //         });
+            // });
+        });
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

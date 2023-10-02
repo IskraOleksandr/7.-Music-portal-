@@ -71,7 +71,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
 
         public IActionResult Register()
         {
-            return View();
+            return PartialView("Register");
         }
 
         [HttpPost]
@@ -115,11 +115,11 @@ namespace Музыкальный_портал__Music_portal_.Controllers
 
                 await _repository.AddUser(user);
                 await _repository.Save();
-                
-                return RedirectToAction("Login");
+                return PartialView("~/Views/Music/Success.cshtml");
+                //return RedirectToAction("Login");
             }
 
-            return View(reg);
+            return PartialView("Register");
         }
          
         public async Task<IActionResult> Edit(int? id)

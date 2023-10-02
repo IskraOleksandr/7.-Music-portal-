@@ -89,7 +89,7 @@ html {
     width: 414px;
 }
 
-.input_subm {
+/*.input_subm {
     height: 40px;
     color: white;
     border: none;
@@ -106,13 +106,33 @@ html {
         box-shadow: 2px 2px 2px rgb(0, 0, 0);
         height: 40px;
         background-color: #13678a;
+    }*/
+
+.input_subm {
+    width: 150px;
+    height: 30px;
+    color: white;
+    border: none;
+    text-align: center;
+    box-shadow: 2px 2px 2px navy;
+    font-size: 20px;
+    border-radius: 5px;
+    background-color: rgb(0, 140, 255);
+}
+
+    .input_subm:hover {
+        color: white;
+        border: solid 1px navy;
+        box-shadow: 2px 2px 2px rgb(0, 0, 0);
+        height: 30px;
+        background-color: rgb(0, 113, 206);
     }
 
-.div_h1 {
+/*.div_h1 {
     width: 990px;
     margin: 15px auto 0px auto;
     height: 60px;
-}
+}*/
 
 .dv1 {
     width: 800px;
@@ -123,22 +143,43 @@ html {
 .dv1 {
     margin-top: -15px;
 }
+.dv1v {
+    width: 800px;
+    height: max-content;
+    margin-top: -15px;
+}
 
-.h1_n {
+/*.h1_n {
     font-size: 46px;
     font-weight: bold;
     width: max-content;
     margin: 10px auto 10px auto;
+}*/
+.h1_n {
+    font-size: 46px;
+    width: initial;
+    text-align: left;
+    font-weight: bold;
+    margin-top: 0px;
 }
-
-.input1 {
-    width: 400px;
+/*.input1 {
+    width: 360px;
     margin-top: 5px;
     height: 27px;
     border-radius: 5px;
     box-shadow: 5px 5px 5px rgb(42, 117, 255);
     font-size: 18px;
     float: left;
+}*/
+
+.input1 {
+    height: 25px;
+    width: 360px;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px rgb(42, 117, 255);
+    font-size: 18px;
+    float: left;
+    margin-top: 5px;
 }
 
 .div_l1 {
@@ -168,11 +209,41 @@ html {
     margin-top: 25px;
 }
 
-.div_l3n {
+/*.div_l3n {
     width: 412px;
     margin-left: 25px;
     margin-top: 5px;
+}*/
+
+/*hhhhhhhhhhhhhhhhhhhhhhhhhhhh*/
+
+.dv_w {
+    width: 365px;
 }
+
+.dv_h {
+    height: 280px;
+}
+
+.div_h1 {
+    width: 365px;
+    margin: 15px auto 0px auto;
+    height: 60px;
+    font-size: 38px
+}
+
+.div_l3n {
+    width: 365px;
+    margin-top: 5px;
+}
+
+.div_l4 {
+    height: 70px;
+    width: 365px;
+}
+
+
+/*hhhhhhhhhhhhhhhhhhhhhhhhhhhhh*/
 
 .label_l1 {
     font-size: 22px;
@@ -189,17 +260,34 @@ html {
     margin-top: 5px;
     margin-left: -169px
 }
-
-.div_l4 {
-    height: 70px;
-    width: 412px;
+/*hhh*/
+.label3 {
+    font-size: 22px;
+    float: left;
 }
 
-.span_error {
+/*.div_l4 {
+    height: 70px;
+    width: 412px;
+}*/
+.div_l4 {
+    height: 70px;
+    width: 365px;
+}
+/*.span_error {
     font-size: 18px;
     margin-top: 10px;
     color: red;
     width: 410px;
+    display: block;
+    text-align: left;
+}*/
+
+.span_error {
+    font-size: 18px;
+    margin-top: 7px;
+    color: red;
+    width: 370px;
     display: block;
     text-align: left;
 }
@@ -432,3 +520,11 @@ input[type="file"] {
         height: 40px;
         background-color: #b10f00;
     }
+
+
+    /*hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh*/
+
+.myTitleClass .ui-dialog-titlebar {
+    font-size: 26px;
+    border:none
+}

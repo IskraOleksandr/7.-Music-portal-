@@ -22,7 +22,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
          
         public ActionResult Login()
         {
-            return View();
+            return PartialView("Login");
         }
 
         [HttpPost]
@@ -63,10 +63,10 @@ namespace Музыкальный_портал__Music_portal_.Controllers
                 }
                 HttpContext.Session.SetString("Login", user.Login);
                 HttpContext.Session.SetInt32("Level", user.Level);
-
-                return RedirectToAction("Index", "Music");
+                return PartialView("~/Views/Music/Success.cshtml");
+                //return RedirectToAction("Index", "Music");
             }
-            return View(logon);
+            return PartialView(logon);
         }
 
         public IActionResult Register()

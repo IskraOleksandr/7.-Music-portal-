@@ -10,7 +10,7 @@
         @if (Context.Session.GetString("Login") == null)
         {
             <a data_dialog_title="Register model" id="RegisterDialog" asp-controller="User" asp-action="Register">Регистрация</a>
-            <a style="float: right;" asp-controller="User" asp-action="Login">Вход</a>
+            <a style="float: right;" asp-controller="User" asp-action="Login" id="LoginDialog" data_dialog_title="Login model">Вход</a>
         }
         else
         {
@@ -86,9 +86,10 @@
                     .appendTo("body")
                     .load(this.href)
                     .dialog({
-                        title: "Регистрация" ,
+                        title: "Регистрация",
                         close: function () { $(this).remove() },
-                        width: "420px", dialogClass: 'myTitleClass',
+                        dialogClass: 'myTitleClass',
+                        width: "420px",
                         resizable: false,
                         modal: true,
                         buttons: [{
@@ -109,69 +110,38 @@
                     });
             });
 
-            // $("#LoginDialog").on("click", function (e) {
-            //     e.preventDefault();
+            $("#LoginDialog").on("click", function (e) {
+                e.preventDefault();
 
-            //     $("<div id='dialogContent'></div>")
-            //         .addClass("dialog")
-            //         .appendTo("body")
-            //         .load(this.href)
-            //         .dialog({
-            //             title: $(this).attr("data-dialog-title"),
-            //             close: function () { $(this).remove() },
-            //             width: "400px",
-            //             resizable: false,
-            //             modal: true,
-            //             buttons: [{
-            //                 class: "input_subm",
-            //                 text: "Войти",
-            //                 click: function () {
-            //                     $.ajax({
-            //                         url: "@Url.Action("Login", "User")",
-            //                         type: "POST",
-            //                         data: $('form').serialize(),
-            //                         datatype: "json",
-            //                         success: function (result) {
-            //                             $("#dialogContent").html(result);
-            //                         }
-            //                     });
-            //                 }
-            //             }]
-            //         });
-            // });
+                $("<div id='dialogContent'></div>")
+                    .addClass("dialog")
+                    .appendTo("body")
+                    .load(this.href)
+                    .dialog({
+                        title: "Вход"/* $(this).attr("data-dialog-title") */,
+                        close: function () { $(this).remove() },
+                        dialogClass: 'myTitleClass',
+                        width: "400px",
+                        resizable: false,
+                        modal: true,
+                        buttons: [{
+                            class: "input_subm",
+                            text: "Войти",
+                            click: function () {
+                                $.ajax({
+                                    url: "@Url.Action("Login", "User")",
+                                    type: "POST",
+                                    data: $('form').serialize(),
+                                    datatype: "json",
+                                    success: function (result) {
+                                        $("#dialogContent").html(result);
+                                    }
+                                });
+                            }
+                        }]
+                    });
+            });
 
-
-            // $("#addMessageDialog").on("click", function (e) {
-            //     e.preventDefault();
-
-            //     $("<div id='dialogContent'></div>")
-            //         .addClass("dialog")
-            //         .appendTo("body")
-            //         .load(this.href)
-            //         .dialog({
-            //             title: $(this).attr("data-dialog-title"),
-            //             close: function () { $(this).remove() },
-            //             width: "500px",
-            //             resizable: false,
-            //             modal: true,
-            //             buttons: [{
-            //                 class: "input_subm",
-            //                 text: "Отправить",
-            //                 click: function () {
-            //                     $.ajax({
-            //                         url: "@Url.Action("addMessage", "Message")",
-            //                         type: "POST",
-            //                         data: $('form').serialize(),
-            //                         datatype: "json",
-            //                         success: function (result) {
-            //                             $("#dialogContent").html(result);
-            //                             alert("Сообщение успешно добавлено!");
-            //                         }
-            //                     });
-            //                 }
-            //             }]
-            //         });
-            // });
         });
     </script>
     @{

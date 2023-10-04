@@ -4,32 +4,7 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<header>
-    <div class="my_nav">
-        <a asp-controller="Music" asp-action="Index">Музыкальный портал</a>
-        @if (Context.Session.GetString("Login") == null)
-        {
-            <a data_dialog_title="Register model" id="RegisterDialog" asp-controller="User" asp-action="Register">Регистрация</a>
-            <a style="float: right;" asp-controller="User" asp-action="Login" id="LoginDialog" data_dialog_title="Login model">Вход</a>
-        }
-        else
-        {
-            if (Context.Session.GetInt32("Level") > 0)
-            {
-                <a asp-controller="Music" asp-action="Create">Добавить клип</a>
 
-                if (Context.Session.GetInt32("Level") == 2)
-                {
-                    <a asp-controller="MusicStyle" asp-action="Index">Стили</a>
-                    <a asp-controller="User" asp-action="Index">Все участники</a>
-                    <a asp-controller="Singer" asp-action="Index">Исполнители</a>
-                }
-            }
-            <a style="float: right;" asp-controller="Music" asp-action="Logout">Выход</a>
-            <a class="active" style="float: right;">Здравствуйте, @Context.Session.GetString("Login") </a>
-        }
-    </div>
-</header>
 <br>
 <div>
     @foreach (var item in ViewBag.Musics)
@@ -141,7 +116,37 @@
                         }]
                     });
             });
+            // $("#AddSingerDialog").on("click", function (e) {
+            //     e.preventDefault();
 
+            //     $("<div id='dialogContent'></div>")
+            //         .addClass("dialog")
+            //         .appendTo("body")
+            //         .load(this.href)
+            //         .dialog({
+            //             title: "Вход"/* $(this).attr("data-dialog-title") */,
+            //             close: function () { $(this).remove() },
+            //             dialogClass: 'myTitleClass',
+            //             width: "400px",
+            //             resizable: false,
+            //             modal: true,
+            //             buttons: [{
+            //                 class: "input_subm",
+            //                 text: "Войти",
+            //                 click: function () {
+            //                     $.ajax({
+            //                         url: "@Url.Action("Login", "User")",
+            //                         type: "POST",
+            //                         data: $('form').serialize(),
+            //                         datatype: "json",
+            //                         success: function (result) {
+            //                             $("#dialogContent").html(result);
+            //                         }
+            //                     });
+            //                 }
+            //             }]
+            //         });
+            // });
         });
     </script>
     @{

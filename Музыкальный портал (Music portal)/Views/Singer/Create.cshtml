@@ -1,41 +1,19 @@
 ﻿@model Музыкальный_портал__Music_portal_.Models.Singer
 
-@{
-    ViewData["Title"] = "Create";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-<br>
-<div>
-    <div class="dv1">
-
-        <h1 class="h1_n">Добавление исполнителя</h1>
-
-        <div class="div_l1 div_l2n1">
+<div class="dv_w " style="height:125px;margin-left:10px">
+    <div class="dv1 dv_w " style=" margin-left:0px;height:125px">
+        <div class="dv_w">
             <form asp-action="Create">
-                <div class="div_l2 div_l2n" style="height: max-content">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <br />
-                    <div class="div_l3n">
-                        <div class="div_l4">
-                            <label asp-for="SingerName" class="label_l1"></label>
-                            <input asp-for="SingerName" class="input1 " type="text" />
-                        </div>
-                        <span asp-validation-for="SingerName" class="span_error"></span>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="div_l3n dv_w">
+                    <div class="div_l4 dv_w">
+                        <label asp-for="SingerName" class="label3"></label>
+                        <input asp-for="SingerName" class="input1" type="text" />
                     </div>
-
-
-                    <div class="div_subm">
-                        <input class="input_subm" type="submit" value="Добавить" />
-                    </div>
-
-                    <a class="a_navigation" asp-action="Index">На главную страницу</a>
+                    <span asp-validation-for="SingerName" class="span_error dv_w"></span>
                 </div>
             </form>
         </div>
     </div>
 </div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

@@ -22,7 +22,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
          
         public ActionResult Login()
         {
-            return PartialView("Login");
+            return PartialView();
         }
 
         [HttpPost]
@@ -35,13 +35,13 @@ namespace Музыкальный_портал__Music_portal_.Controllers
                 if (users.Count == 0)
                 {
                     ModelState.AddModelError("", "Не коректный логин или пароль!");
-                    return View(logon);
+                    return PartialView(logon);
                 }
                 var users_t = users.Where(a => a.Login == logon.Login);
                 if (users.ToList().Count == 0)
                 {
                     ModelState.AddModelError("", "Не коректный логин или пароль!");
-                    return View(logon);
+                    return PartialView(logon);
                 }
                 var user = users_t.First();
                 string? salt = user.Salt;
@@ -59,7 +59,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
                 if (user.Password != hash.ToString())
                 {
                     ModelState.AddModelError("", "Не коректный логин или пароль!");
-                    return View(logon);
+                    return PartialView(logon);
                 }
                 HttpContext.Session.SetString("Login", user.Login);
                 HttpContext.Session.SetInt32("Level", user.Level);

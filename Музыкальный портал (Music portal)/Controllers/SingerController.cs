@@ -21,13 +21,13 @@ namespace Музыкальный_портал__Music_portal_.Controllers
             return View();
         }
 
-         
+
         public IActionResult Create()
         {
-            return View();
+            return PartialView();
         }
 
-         
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,SingerName")] Singer singer)
@@ -35,13 +35,14 @@ namespace Музыкальный_портал__Music_portal_.Controllers
             if (ModelState.IsValid)
             {
                 await _repository.AddSinger(singer);
-                await _repository.Save();
-                return RedirectToAction("Index");
+                await _repository.Save(); 
+                return PartialView("~/Views/Music/Success.cshtml");
+                //return RedirectToAction("Index");
             }
-            return View(singer);
+            return PartialView(singer);
         }
 
-        
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || await _repository.GetSingers() == null)
@@ -54,10 +55,10 @@ namespace Музыкальный_портал__Music_portal_.Controllers
             {
                 return NotFound();
             }
-            return View(singer);
+            return PartialView(singer);
         }
 
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,SingerName")] Singer singer)
@@ -85,12 +86,12 @@ namespace Музыкальный_портал__Music_portal_.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("Index");
+                return PartialView("~/Views/Music/Success.cshtml");
             }
-            return View(singer);
+            return PartialView(singer);
         }
 
-         
+
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || await _repository.GetSingers() == null)
@@ -104,7 +105,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
                 return NotFound();
             }
 
-            return View(singer);
+            return PartialView(singer);
         }
 
         [HttpPost, ActionName("Delete")]
@@ -123,7 +124,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
             }
 
             await _repository.Save();
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
         private async Task<bool> SingerExists(int id)

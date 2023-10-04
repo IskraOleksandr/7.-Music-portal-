@@ -1,14 +1,14 @@
 ﻿@model Музыкальный_портал__Music_portal_.Models.Singer
 
-@{
+@* @{
     ViewData["Title"] = "Delete";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
  
 <br>
 <br />
-<br />
-<div>
+<br /> *@
+@* <div>
     <div class="dv1">
 
         <h1 class="h1_n">Удаление исполнителя</h1>
@@ -35,4 +35,41 @@
             </div>
         </div>
     </div>
+</div> *@
+
+@* <div class="dv_w " style="height:125px;margin-left:10px">
+    <div class="dv1 dv_w " style=" margin-left:0px;height:125px">
+        <div class="dv_w">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="div_l3n dv_w">
+                    <div class="div_l4 dv_w">
+                        <label asp-for="SingerName" class="label3"></label>
+                        <input asp-for="SingerName" class="input1" type="text" />
+                    </div>
+                    <span asp-validation-for="SingerName" class="span_error dv_w"></span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> *@
+
+
+<div style="margin-left:10px">
+    <h3 style="margin-top:-15px">Вы действительно желаете удалить исполнителя?</h3>
+    <dl class="row">
+        <dt style="font-weight:bold">
+            @Html.DisplayNameFor(model => model.SingerName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SingerName)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Удалить" class="input_subm_del" />
+        @* <a asp-action="Index">На главную страницу</a> *@
+    </form>
 </div>

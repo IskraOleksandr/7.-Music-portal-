@@ -55,8 +55,8 @@
                                             @Html.DisplayFor(modelItem => item.Level)
                                         </td>
                                         <td class="td2">
-                                            <a class="a_bt2" asp-action="Edit" asp-route-id="@item.Id">Редактировать</a>
-                                            <a class="a_bt2" asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+                                            <a class="a_bt2" asp-action="Edit" asp-route-id="@item.Id" id="EditUserDialog" data_dialog_title="Edit model">Редактировать</a>
+                                            <a class="a_bt2" asp-action="Delete" asp-route-id="@item.Id" id="DeleteUserDialog" data_dialog_title="Delete model">Удалить</a>
                                         </td>
                                     </tr>
                                 }
@@ -69,3 +69,64 @@
         </div>
     </div>
 </div>
+
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+
+            $("#DeleteUserDialog").on("click", function (e) {
+                e.preventDefault();
+
+                $("<div></div>")
+                    .addClass("dialog")
+                    .appendTo("body")
+                    .dialog({
+                        title: "Удаление пользователя" /* $(this).attr("data-dialog-title") */,
+                        close: function () { $(this).remove() },
+                        dialogClass: 'myTitleClass',
+                        width: "420px",
+                        resizable: false,
+                        modal: true
+                    })
+                    .load(this.href);
+            });
+
+
+            $("#EditUserDialog").on("click", function (e) {
+                e.preventDefault();
+
+                $("<div id='dialogContent'></div>")
+                    .addClass("dialog")
+                    .appendTo("body")
+                    .load(this.href)
+                    .dialog({
+                        title: "Редактирование пользователя",
+                        close: function () { $(this).remove() },
+                        dialogClass: 'myTitleClass1v',
+                        width: "485px",
+                        resizable: false,
+                        modal: true,
+                        buttons: [{
+                            class: "input_subm inp_sub",
+                            text: "Сохранить",
+                            click: function () {
+                                $.ajax({
+                                    url: "@Url.Action("Edit", "User")",
+                                    type: "POST",
+                                    data: $('form').serialize(),
+                                    datatype: "json",
+                                    success: function (result) {
+                                        $("#dialogContent").html(result);
+                                    }
+                                });
+                            }
+                        }]
+                    });
+            });
+        });
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

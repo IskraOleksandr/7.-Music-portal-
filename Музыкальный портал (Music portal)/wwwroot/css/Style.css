@@ -109,7 +109,8 @@ html {
     }*/
 
 .input_subm {
-    width: 150px;
+    /*margin-right:30px;*/
+    width: 170px;
     height: 30px;
     color: white;
     border: none;
@@ -118,6 +119,8 @@ html {
     font-size: 20px;
     border-radius: 5px;
     background-color: rgb(0, 140, 255);
+   
+    /*margin: 0px auto 0px auto;*/
 }
 
     .input_subm:hover {
@@ -483,21 +486,21 @@ input[type="file"] {
 }
 
 .input_subm_del {
-    height: 40px;
+    height: 30px;
     color: white;
     border: none;
     box-shadow: 2px 2px 2px darkred;
     font-size: 20px;
     border-radius: 5px;
     width: 204px;
-    background-color: rgb(228, 20, 0);
+    background-color: rgb(228, 20, 0); 
 }
 
     .input_subm_del:hover {
         color: white;
         border: solid 1px navy;
         box-shadow: 2px 2px 2px rgb(0, 0, 0);
-        height: 40px;
+        
         background-color: #b10f00;
     }
 
@@ -517,7 +520,7 @@ input[type="file"] {
         color: white;
         border: solid 1px navy;
         box-shadow: 2px 2px 2px rgb(0, 0, 0);
-        height: 40px;
+        
         background-color: #b10f00;
     }
 
@@ -531,4 +534,36 @@ input[type="file"] {
 .myTitleClass1 .ui-dialog-titlebar {
     font-size: 20px;
     border: none;
-} 
+}
+
+.myTitleClass1v .ui-dialog-titlebar {
+    font-size: 20px;
+    border: none;
+    text-align:center;
+}
+
+
+dd {
+    font-size:18px;
+    margin-left: 0px;
+}
+dt {
+    font-size: 18px;
+    font-weight: bold;
+}
+.inp_sub2 {
+    position: relative;
+    left: -100px;
+}
+.inp_sub3 {
+    position: relative;
+    left: 80px;
+}
+.inp_sub {
+    position: relative;
+    left: -140px;
+}
+.inp_sub1 {
+    position: relative;
+    left: 20px;
+}

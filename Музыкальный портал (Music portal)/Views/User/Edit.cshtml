@@ -1,76 +1,57 @@
 ﻿@model Музыкальный_портал__Music_portal_.Models.User
-
-@{
-    ViewData["Title"] = "Edit";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-<br>
-<div>
-    <div class="dv1">
-
-        <h1 class="h1_n">Редактировать пользователя </h1>
-
-        <div class="div_l1 div_l2n1">
+ 
+<div class="dv_w" style="margin-left:35px">
+    <div class="dv1v dv_w">
+        <div class="dv_w">
             <form asp-action="Edit">
-                <div class="div_l2 div_l2n" style="height: max-content">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input type="hidden" asp-for="Id" /> 
-                    <input type="hidden" asp-for="Password" />
-                    <input type="hidden" asp-for="Salt" />
-                    <div class="div_l3">
-                        <div class="div_l4">
-                            <label asp-for="FirstName" class="label_l1"></label>
-                            <input asp-for="FirstName" class="input1 " type="text" />
-                        </div>
-                        <span asp-validation-for="FirstName" class="span_error"></span>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="Password" />
+                <input type="hidden" asp-for="Salt" />
+                <br />
+                <div class="div_l3n dv_w">
+                    <div class="div_l4 dv_w">
+                        <label asp-for="FirstName" class="label3"></label>
+                        <input asp-for="FirstName" class="input1" type="text" />
                     </div>
-
-                    <div class="div_l3n">
-                        <div class="div_l4">
-                            <label asp-for="LastName" class="label_l1"></label>
-                            <input asp-for="LastName" class="input1 " type="text" />
-                        </div>
-                        <span asp-validation-for="LastName" class="span_error"></span>
-                    </div>
-
-                    <div class="div_l3n">
-                        <div class="div_l4">
-                            <label asp-for="Login" class="label_l1"></label>
-                            <input asp-for="Login" class="input1 " type="text" />
-                        </div>
-                        <span asp-validation-for="Login" class="span_error"></span>
-                    </div>
-
-                    <div class="div_l3n">
-                        <div class="div_l4">
-                            <label asp-for="Email" class="label_l1"></label>
-                            <input asp-for="Email" class="input1 " type="email" />
-                        </div>
-                        <span asp-validation-for="Email" class="span_error"></span>
-                    </div>
-
-                    <div class="div_l3n">
-                        <div class="div_l4">
-                            <label asp-for="Level" class="label_l1"></label>
-                            <input asp-for="Level" class="input1 " type="number" min="0" max="2" placeholder="0" />
-                        </div>
-                        <span asp-validation-for="Level" class="span_error"></span>
-                    </div>
-
-                    <div class="div_subm">
-                        <input class="input_subm" type="submit" value="Сохранить" />
-                    </div>
-
-                    <a class="a_navigation" asp-action="Index">На главную страницу</a>
+                    <span asp-validation-for="FirstName" class="span_error dv_w"></span>
                 </div>
+
+                <div class="div_l3n dv_w">
+                    <div class="div_l4 dv_w">
+                        <label asp-for="LastName" class="label3"></label>
+                        <input asp-for="LastName" class="input1" type="text" />
+                    </div>
+                    <span asp-validation-for="LastName" class="span_error dv_w"></span>
+                </div>
+
+                <div class="div_l3n dv_w">
+                    <div class="div_l4 dv_w">
+                        <label asp-for="Login" class="label3"></label>
+                        <input asp-for="Login" class="input1" type="text" />
+                    </div>
+                    <span asp-validation-for="Login" class="span_error dv_w"></span>
+                </div>
+
+                <div class="div_l3n dv_w">
+                    <div class="div_l4 dv_w">
+                        <label asp-for="Email" class="label3"></label>
+                        <input asp-for="Email" class="input1" type="text" />
+                    </div>
+                    <span asp-validation-for="Email" class="span_error dv_w"></span>
+                </div>
+
+                <div class="div_l3n dv_w">
+                    <div class="div_l4 dv_w">
+                        <label asp-for="Level" class="label3"></label>
+                        <input asp-for="Level" class="input1 " type="number" min="0" max="2" placeholder="0" />
+                    </div>
+                    <span asp-validation-for="Level" class="span_error dv_w"></span>
+                </div>
+
+                @* <input asp-for="Level" type="hidden" value="0" /> *@
             </form>
         </div>
+
     </div>
 </div>
-
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}

@@ -134,7 +134,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
             {
                 return NotFound();
             }
-            return View(user);
+            return PartialView(user);
         }
          
         [HttpPost]
@@ -164,9 +164,10 @@ namespace Музыкальный_портал__Music_portal_.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("Index");
+                return PartialView("~/Views/Music/Success.cshtml");
+                //return RedirectToAction("Index");
             }
-            return View(user);
+            return PartialView(user);
         }
          
         public async Task<IActionResult> Delete(int? id)
@@ -182,7 +183,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
                 return NotFound();
             }
 
-            return View(user);
+            return PartialView(user);
         }
          
         [HttpPost, ActionName("Delete")]
@@ -201,7 +202,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
             }
 
             await _repository.Save();
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
         private async Task<bool> UserExists(int id)

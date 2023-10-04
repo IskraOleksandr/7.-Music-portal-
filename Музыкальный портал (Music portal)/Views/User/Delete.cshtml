@@ -1,69 +1,43 @@
 ﻿@model Музыкальный_портал__Music_portal_.Models.User
-
-@{
-    ViewData["Title"] = "Delete";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
  
-<br>
-<div>
-    <div class="dv1">
+<div style="margin-left:10px">
+    <h3 style="margin-top:-15px">Вы действительно желаете удалить пользователя?</h3>
+    <dl class="row">
+        <dt >
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+        <dd >
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+        <dt >
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+        <dt >
+            @Html.DisplayNameFor(model => model.Login)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Login)
+        </dd>
+        <dt >
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt >
+            @Html.DisplayNameFor(model => model.Level)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Level)
+        </dd>
+    </dl>
 
-        <h1 class="h1_n">Удаление пользователя</h1>
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Удалить" class="input_subm_del inp_sub3" />
 
-        <div class="div_l1 div_l2n1">
-             
-                <div class="div_l2 div_l2n" style="height: max-content">
-                <br />
-                <div class="div_l3n">
-                    <div class="div_l4">
-                        <h3>Вы действительно желаете удалить пользователя?</h3> 
-                    </div>
-                </div>
-                    <div class="div_l3">
-                        <div class="div_l4">
-                        <label class="label_l1m">@Html.DisplayNameFor(model => model.FirstName)</label>
-                        <p class="p1_n ">@Html.DisplayFor(model => model.FirstName)</p>
-                        </div> 
-                    </div>
-
-                    <div class="div_l3n">
-                        <div class="div_l4">
-                        <label class="label_l1m">@Html.DisplayNameFor(model => model.LastName)</label>
-                        <p class="p1_n ">@Html.DisplayFor(model => model.LastName)</p>
-                        </div> 
-                    </div>
-
-                    <div class="div_l3n">
-                        <div class="div_l4">
-                        <label class="label_l1m">@Html.DisplayNameFor(model => model.Login)</label>
-                        <p class="p1_n ">@Html.DisplayFor(model => model.Login)</p>
-                        </div> 
-                    </div>
-
-                    <div class="div_l3n">
-                        <div class="div_l4">
-                        <label class="label_l1m">@Html.DisplayNameFor(model => model.Email)</label>
-                        <p class="p1_n ">@Html.DisplayFor(model => model.Email)</p>
-                        </div> 
-                    </div>
-
-                    <div class="div_l3n">
-                        <div class="div_l4">
-                        <label class="label_l1m">@Html.DisplayNameFor(model => model.Level)</label>
-                        <p class="p1_n ">@Html.DisplayFor(model => model.Level)</p>
-                        </div> 
-                    </div>
-
-                <form asp-action="Delete">
-                    <input type="hidden" asp-for="Id" />
-                    <div class="div_subm">
-                        <input class="input_subm_del" type="submit" value="Удалить" />
-                    </div>
-                    <a class="a_navigation" asp-action="Index">На главную страницу</a>
-                </form>
-                </div>
-             
-        </div>
-    </div>
+    </form>
 </div>

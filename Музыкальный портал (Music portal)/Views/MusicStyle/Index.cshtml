@@ -13,7 +13,7 @@
             <div class="div_l2 div_l2n wh">
                  
                 <hr style="border:none;width:465px" />
-                <a class="a_bt1 " asp-action="Create">Добавить стиль</a>
+                <a class="a_bt1 " asp-action="Create" id="AddMusicStyleDialog" data_dialog_title="Create model">Добавить стиль</a>
 
                 <div class="div_l3n wh">
                     <div class="div_l4 wh">
@@ -32,8 +32,8 @@
                                         <tr class="tr1">
                                             <td class="td1"> @item.StyleName </td>
                                             <td class="td1">
-                                                <a class="a_bt2" asp-action="Edit" asp-route-id="@item.Id">Редактировать</a>
-                                                <a class="a_bt2" asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+                                                <a class="a_bt2" asp-action="Edit" asp-route-id="@item.Id" id="EditMusicStyleDialog" data_dialog_title="Edit model">Редактировать</a>
+                                                <a class="a_bt2" asp-action="Delete" asp-route-id="@item.Id" id="DeleteMusicStyleDialog" data_dialog_title="Delete model">Удалить</a>
                                             </td>
                                         </tr>
                                     }
@@ -51,3 +51,95 @@
         </div>
     </div>
 </div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+
+            $("#DeleteMusicStyleDialog").on("click", function (e) {
+                e.preventDefault();
+
+                $("<div></div>")
+                    .addClass("dialog")
+                    .appendTo("body")
+                    .dialog({
+                        title: "Удаление стиля" /* $(this).attr("data-dialog-title") */,
+                        close: function () { $(this).remove() },
+                        dialogClass: 'myTitleClass',
+                        width: "420px",
+                        resizable: false,
+                        modal: true
+                    })
+                    .load(this.href);
+            });
+
+
+            $("#AddMusicStyleDialog").on("click", function (e) {
+                e.preventDefault();
+
+                $("<div id='dialogContent'></div>")
+                    .addClass("dialog")
+                    .appendTo("body")
+                    .load(this.href)
+                    .dialog({
+                        title: "Добавление стиля",
+                        close: function () { $(this).remove() },
+                        dialogClass: 'myTitleClass',
+                        width: "410px",
+                        resizable: false,
+                        modal: true,
+                        buttons: [{
+                            class: "input_subm",
+                            text: "Добавить",
+                            click: function () {
+                                $.ajax({
+                                    url: "@Url.Action("Create", "MusicStyle")",
+                                    type: "POST",
+                                    data: $('form').serialize(),
+                                    datatype: "json",
+                                    success: function (result) {
+                                        $("#dialogContent").html(result);
+                                    }
+                                });
+                            }
+                        }]
+                    });
+            });
+
+            $("#EditMusicStyleDialog").on("click", function (e) {
+                e.preventDefault();
+
+                $("<div id='dialogContent'></div>")
+                    .addClass("dialog")
+                    .appendTo("body")
+                    .load(this.href)
+                    .dialog({
+                        title: "Редактирование стиля",
+                        close: function () { $(this).remove() },
+                        dialogClass: 'myTitleClass1',
+                        width: "415px",
+                        resizable: false,
+                        modal: true,
+                        buttons: [{
+                            class: "input_subm",
+                            text: "Сохранить",
+                            click: function () {
+                                $.ajax({
+                                    url: "@Url.Action("Edit", "MusicStyle")",
+                                    type: "POST",
+                                    data: $('form').serialize(),
+                                    datatype: "json",
+                                    success: function (result) {
+                                        $("#dialogContent").html(result);
+                                    }
+                                });
+                            }
+                        }]
+                    });
+            });
+        });
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

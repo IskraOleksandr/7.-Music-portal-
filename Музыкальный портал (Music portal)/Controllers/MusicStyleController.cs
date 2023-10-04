@@ -24,7 +24,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
          
         public IActionResult Create()
         {
-            return View();
+            return PartialView();
         }
 
          
@@ -36,9 +36,9 @@ namespace Музыкальный_портал__Music_portal_.Controllers
             {
                 await _repository.AddMusicStyle(style);
                 await _repository.Save();
-                return RedirectToAction("Index");
+                return PartialView("~/Views/Music/Success.cshtml");
             }
-            return View(style);
+            return PartialView(style);
         }
 
         
@@ -54,7 +54,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
             {
                 return NotFound();
             }
-            return View(style);
+            return PartialView(style);
         }
 
          
@@ -85,9 +85,9 @@ namespace Музыкальный_портал__Music_portal_.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("Index");
+                return PartialView("~/Views/Music/Success.cshtml");
             }
-            return View(style);
+            return PartialView(style);
         }
 
          
@@ -104,7 +104,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
                 return NotFound();
             }
 
-            return View(style);
+            return PartialView(style);
         }
 
 
@@ -124,7 +124,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
             }
 
             await _repository.Save();
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
         private async Task<bool> MusicStyleExists(int id)

@@ -1,60 +1,5 @@
 ﻿@model Музыкальный_портал__Music_portal_.Models.Singer
 
-@* @{
-    ViewData["Title"] = "Delete";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
- 
-<br>
-<br />
-<br /> *@
-@* <div>
-    <div class="dv1">
-
-        <h1 class="h1_n">Удаление исполнителя</h1>
-
-        <div class="div_l1 div_l2n1">
-
-            <div class="div_l2 div_l2n" style="height: max-content">
-                <br />
-                <div class="div_l3n">
-                    <div class="div_l4">
-                        <h3>Вы действительно желаете удалить исполнителя?</h3>
-                        <label class="label_l1" style="font-weight:bold">@Html.DisplayNameFor(model => model.SingerName)</label><br />
-                        <label class="label_l1 label_l2">@Html.DisplayFor(model => model.SingerName)</label>
-                    </div>
-                </div>
-                <br /><br />
-                <form asp-action="Delete">
-                    <input type="hidden" asp-for="Id" />
-                    <div class="div_subm">
-                        <input class="input_subm_del" type="submit" value="Удалить" />
-                    </div>
-                    <a class="a_navigation" asp-action="Index">На главную страницу</a>
-                </form>
-            </div>
-        </div>
-    </div>
-</div> *@
-
-@* <div class="dv_w " style="height:125px;margin-left:10px">
-    <div class="dv1 dv_w " style=" margin-left:0px;height:125px">
-        <div class="dv_w">
-            <form asp-action="Create">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-                <div class="div_l3n dv_w">
-                    <div class="div_l4 dv_w">
-                        <label asp-for="SingerName" class="label3"></label>
-                        <input asp-for="SingerName" class="input1" type="text" />
-                    </div>
-                    <span asp-validation-for="SingerName" class="span_error dv_w"></span>
-                </div>
-            </form>
-        </div>
-    </div>
-</div> *@
-
 
 <div style="margin-left:10px">
     <h3 style="margin-top:-15px">Вы действительно желаете удалить исполнителя?</h3>
@@ -70,6 +15,6 @@
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
         <input type="submit" value="Удалить" class="input_subm_del" />
-        @* <a asp-action="Index">На главную страницу</a> *@
+        
     </form>
 </div>

@@ -1,38 +1,43 @@
 ﻿@model Музыкальный_портал__Music_portal_.Models.Music
 
-@{
-    ViewData["Title"] = "Delete";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+<div style="margin-left:10px">
+    <h3 style="margin-top:-15px">Вы действительно желаете удалить пользователя?</h3>
+    <dl class="row">
+        <dt>
+            @Html.DisplayNameFor(model => model.Video_Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Video_Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Album)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Album)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Year)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Year)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.User.Login)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.User.Login)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.VideoDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.VideoDate)
+        </dd>
+    </dl>
 
-<br>
-<div>
-   
-        <br> <br>
-        <div class="div_m1">
-            <div class="div_mess div_m2">
-            <h1 class="h1_m">@Html.DisplayFor(model => model.Video_Name) (@Html.DisplayFor(model => model.Year))</h1>
-                <video controls loop class="video">
-                    <source src="@Url.Content(Model.Video_URL)" type="video/webm">
-                </video>
-            </div>
-            <div class="div_m3">
-            <h2>@Html.DisplayFor(model => model.Video_Name) (@Html.DisplayFor(model => model.Year))</h2>
-            <p>Исполнитель: @Html.DisplayFor(model => model.Singer.SingerName)</p>
-            <p>Альбом:@Html.DisplayFor(model => model.Album)</p>
-            <p>Стиль: @Html.DisplayFor(model => model.MusicStyle.StyleName)</p>
-            <p>Разместил: @Html.DisplayFor(model => model.User.Login)</p>
-            <p>Дата публикации: @Html.DisplayFor(model => model.VideoDate)</p>
-             
-            <form asp-action="Delete">
-                <input type="hidden" asp-for="Id" />
-                <div class="div_subm">
-                    <input class="input_subm_del1" type="submit" value="Удалить" />
-                </div>
-                @* <a class="a_navigation a_navigation1" asp-action="Index">На главную страницу</a> *@
-            </form>
-        </div>
-        </div>
-        <br> <br> <br>
-   
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Удалить" class="input_subm_del inp_sub3" />
+
+    </form>
 </div>

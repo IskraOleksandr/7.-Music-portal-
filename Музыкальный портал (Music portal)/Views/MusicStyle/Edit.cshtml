@@ -1,45 +1,5 @@
 ﻿@model Музыкальный_портал__Music_portal_.Models.MusicStyle
 
-@* @{
-    ViewData["Title"] = "Edit";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-<br>
-<div>
-    <div class="dv1">
-
-        <h1 class="h1_n">Редактирование стиля</h1>
-
-        <div class="div_l1 div_l2n1">
-            <form asp-action="Edit">
-                <div class="div_l2 div_l2n" style="height: max-content">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input type="hidden" asp-for="Id" />
-                    <br />
-                    <div class="div_l3n">
-                        <div class="div_l4">
-                            <label asp-for="StyleName" class="label_l1"></label>
-                            <input asp-for="StyleName" class="input1 " type="text" />
-                        </div>
-                        <span asp-validation-for="StyleName" class="span_error"></span>
-                    </div>
-
-
-                    <div class="div_subm">
-                        <input class="input_subm" type="submit" value="Сохранить" />
-                    </div>
-
-                    <a class="a_navigation" asp-action="Index">На главную страницу</a>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-} *@
 <div class="dv_w " style="height:125px;margin-left:10px">
     <div class="dv1 dv_w " style=" margin-left:0px;height:125px">
         <div class="dv_w">

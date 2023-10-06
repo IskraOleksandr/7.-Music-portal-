@@ -37,7 +37,6 @@ namespace Музыкальный_портал__Music_portal_.Controllers
                 await _repository.AddSinger(singer);
                 await _repository.Save(); 
                 return PartialView("~/Views/Music/Success.cshtml");
-                //return RedirectToAction("Index");
             }
             return PartialView(singer);
         }

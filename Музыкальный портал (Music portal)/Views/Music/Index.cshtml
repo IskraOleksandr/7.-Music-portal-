@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-}
+} 
 
 <br>
 <div>
@@ -26,8 +26,8 @@
                 <p>Дата публикации: @item.VideoDate</p>
                 @if (Context.Session.GetInt32("Level") == 2 && Context.Session.GetString("Login") != null)
                 {
-                    <a class="a_bt" asp-action="Edit" asp-route-id="@item.Id">Редактировать</a>
-                    <a class="a_bt" asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+                    <a class="a_bt" asp-action="Edit" asp-route-id="@item.Id" id="EditMusicDialog" data_dialog_title="Edit model">Редактировать</a>
+                    <a class="a_bt" asp-action="Delete" asp-route-id="@item.Id" id="DeleteMusicDialog" data_dialog_title="Delete model">Удалить</a>
                 }
             </div>
         </div>
@@ -39,7 +39,7 @@
     <script>
         $(document).ready(function () {
 
-            $(".viewDialog").on("click", function (e) {
+            $("#DeleteMusicDialog").on("click", function (e) {
                 e.preventDefault();
 
                 $("<div></div>")
@@ -52,6 +52,73 @@
                     })
                     .load(this.href);
             });
+
+
+
+            $("#AddMusicDialog").on("click", function (e) {
+                e.preventDefault(); 
+
+                $("<div id='dialogContent' style='width: 10px'></div>")
+                    .addClass("dialog")
+                    .appendTo("body")
+                    .load(this.href)
+                    .dialog({
+                        title: "Добавление песни",
+                        close: function () { $(this).remove() },
+                        dialogClass: 'myTitleClass',
+                        width: "420px",
+                        resizable: false,
+                        modal: true,
+                        buttons: [{
+                            class: "input_subm inp_sub2",
+                            text: "Сохранить",
+                            click: function () { 
+                                $.ajax({
+                                    url: "@Url.Action("Create", "Music")",
+                                    type: "POST",
+                                    data: $('form').serialize(),
+                                    datatype: "json",
+                                    success: function (result) {
+                                        $("#dialogContent").html(result);
+                                    }
+                                });
+                            }
+                        }]
+                    });
+            });
+
+            $("#EditMusicDialog").on("click", function (e) {
+                e.preventDefault();
+
+                $("<div id='dialogContent' style='width: 10px'></div>")
+                    .addClass("dialog")
+                    .appendTo("body")
+                    .load(this.href)
+                    .dialog({
+                        title: "Регистрация",
+                        close: function () { $(this).remove() },
+                        dialogClass: 'myTitleClass',
+                        width: "420px",
+                        resizable: false,
+                        modal: true,
+                        buttons: [{
+                            class: "input_subm inp_sub2",
+                            text: "Сохранить",
+                            click: function () {
+                                $.ajax({
+                                    url: "@Url.Action("Edit", "Music")",
+                                    type: "POST",
+                                    data: $('form').serialize(),
+                                    datatype: "json",
+                                    success: function (result) {
+                                        $("#dialogContent").html(result);
+                                    }
+                                });
+                            }
+                        }]
+                    });
+            }); 
+
 
             $("#RegisterDialog").on("click", function (e) {
                 e.preventDefault();
@@ -68,7 +135,7 @@
                         resizable: false,
                         modal: true,
                         buttons: [{
-                            class: "input_subm",
+                            class: "input_subm inp_sub2",
                             text: "Сохранить",
                             click: function () {
                                 $.ajax({
@@ -96,11 +163,11 @@
                         title: "Вход"/* $(this).attr("data-dialog-title") */,
                         close: function () { $(this).remove() },
                         dialogClass: 'myTitleClass',
-                        width: "400px",
+                        width: "420px",
                         resizable: false,
                         modal: true,
                         buttons: [{
-                            class: "input_subm",
+                            class: "input_subm inp_sub2",
                             text: "Войти",
                             click: function () {
                                 $.ajax({
@@ -116,37 +183,7 @@
                         }]
                     });
             });
-            // $("#AddSingerDialog").on("click", function (e) {
-            //     e.preventDefault();
-
-            //     $("<div id='dialogContent'></div>")
-            //         .addClass("dialog")
-            //         .appendTo("body")
-            //         .load(this.href)
-            //         .dialog({
-            //             title: "Вход"/* $(this).attr("data-dialog-title") */,
-            //             close: function () { $(this).remove() },
-            //             dialogClass: 'myTitleClass',
-            //             width: "400px",
-            //             resizable: false,
-            //             modal: true,
-            //             buttons: [{
-            //                 class: "input_subm",
-            //                 text: "Войти",
-            //                 click: function () {
-            //                     $.ajax({
-            //                         url: "@Url.Action("Login", "User")",
-            //                         type: "POST",
-            //                         data: $('form').serialize(),
-            //                         datatype: "json",
-            //                         success: function (result) {
-            //                             $("#dialogContent").html(result);
-            //                         }
-            //                     });
-            //                 }
-            //             }]
-            //         });
-            // });
+             
         });
     </script>
     @{

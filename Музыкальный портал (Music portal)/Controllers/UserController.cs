@@ -64,7 +64,6 @@ namespace Музыкальный_портал__Music_portal_.Controllers
                 HttpContext.Session.SetString("Login", user.Login);
                 HttpContext.Session.SetInt32("Level", user.Level);
                 return PartialView("~/Views/Music/Success.cshtml");
-                //return RedirectToAction("Index", "Music");
             }
             return PartialView(logon);
         }
@@ -116,7 +115,6 @@ namespace Музыкальный_портал__Music_portal_.Controllers
                 await _repository.AddUser(user);
                 await _repository.Save();
                 return PartialView("~/Views/Music/Success.cshtml");
-                //return RedirectToAction("Login");
             }
 
             return PartialView("Register");
@@ -165,7 +163,6 @@ namespace Музыкальный_портал__Music_portal_.Controllers
                     }
                 }
                 return PartialView("~/Views/Music/Success.cshtml");
-                //return RedirectToAction("Index");
             }
             return PartialView(user);
         }

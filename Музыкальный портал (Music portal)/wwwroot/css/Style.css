@@ -328,7 +328,8 @@ input[type="file"] {
     text-align: center;
     font-size: 16px;
     border: none;
-    width: 400px;
+    width: 360px;
+    /*width: 400px;*/
     margin-left: -3px;
     padding-left: 3px;
     margin-top: 5px;
@@ -348,7 +349,7 @@ input[type="file"] {
         margin-left: -3px;
         padding-left: 3px;
         border-radius: 5px;
-        width: 400px;
+        /*width: 400px;*/
         margin-top: 5px;
         padding-top: 5px;
         padding-bottom: 3px;
@@ -370,14 +371,15 @@ input[type="file"] {
 }
 
 .div_com {
-    width: 404px;
+    /*width: 404px;*/
     height: 27px;
+    width: 360px;
     margin: 8px auto 10px 12px;
 }
 
 .input_range {
     height: 35px;
-    width: 404px;
+    width: 360px;
 }
 
 .a_bt {

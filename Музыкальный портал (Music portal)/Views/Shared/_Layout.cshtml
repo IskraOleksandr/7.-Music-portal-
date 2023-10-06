@@ -22,7 +22,7 @@
             {
                 if (Context.Session.GetInt32("Level") > 0)
                 {
-                    <a asp-controller="Music" asp-action="Create">Добавить клип</a>
+                    <a asp-controller="Music" asp-action="Create" id="AddMusicDialog" data_dialog_title="Create model">Добавить клип</a>
 
                     if (Context.Session.GetInt32("Level") == 2)
                     {
@@ -40,6 +40,7 @@
         @RenderBody()
 
     </div>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

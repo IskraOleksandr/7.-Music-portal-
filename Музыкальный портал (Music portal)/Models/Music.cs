@@ -38,7 +38,7 @@ namespace Музыкальный_портал__Music_portal_.Models
         [Display(Name = "Стиль:")]
         public int MusicStyleId { get; set; }
 
-        [Display(Name = "Пользователь:")]
+        [Display(Name = "Разместил:")]
         public int UserId { get; set; }
 
         [Required(ErrorMessage = "Поле исполнителя должно быть установлено.")]

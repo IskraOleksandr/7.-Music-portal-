@@ -9,7 +9,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
 {
     public class MusicController : Controller
     {
-        IRepository _repository; 
+        IRepository _repository;
         private readonly IWebHostEnvironment _appEnvironment;
 
         public MusicController(IRepository repository, IWebHostEnvironment webHostEnvironment)
@@ -29,7 +29,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
         {
             HttpContext.Session.Clear();
             return RedirectToAction("Index", "Music");
-        } 
+        }
 
         public async Task<IActionResult> Create()
         {
@@ -45,14 +45,14 @@ namespace Музыкальный_портал__Music_portal_.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Video_Name,Album,Year,Video_URL,VideoDate,MusicStyleId,SingerId,UserId")] Music music, IFormFile Video_URL)
         {
-            
+
             var user_login = HttpContext.Session.GetString("Login");
 
-                if (HttpContext.Session.GetString("Login") == null)
-                    return PartialView("~/Views/User/Login.cshtml");
+            if (HttpContext.Session.GetString("Login") == null)
+                return PartialView("~/Views/User/Login.cshtml");
 
 
-                var us = await _repository.GetUser(user_login);
+            var us = await _repository.GetUser(user_login);
             music.User = us;
 
             var style = await _repository.GetMusicStyleById(music.MusicStyleId);
@@ -75,14 +75,9 @@ namespace Музыкальный_портал__Music_portal_.Controllers
                     }
                     music.Video_URL = "~" + file_path;
                 }
-                else
-                {
-                    ModelState.AddModelError("", "Выберите файл песни!");
-                    return PartialView();
-                }
 
                 await _repository.AddMusic(music);
-                await _repository.Save(); 
+                await _repository.Save();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -116,7 +111,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
 
             ViewBag.Style_List = new SelectList(styles, "Id", "StyleName");
             ViewBag.Singer_List = new SelectList(singers, "Id", "SingerName");
-            return PartialView(music);
+            return PartialView("Edit", music);
         }
 
 
@@ -161,7 +156,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
                     return PartialView();
                 }
 
-                 _repository.UpdateMusic(music);
+                _repository.UpdateMusic(music);
                 await _repository.Save();
             }
             catch (DbUpdateConcurrencyException)
@@ -172,7 +167,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
                 }
                 else throw;
             }
-            return PartialView("~/Views/Music/Success.cshtml"); 
+            return PartialView("~/Views/Music/Success.cshtml");
         }
 
         public async Task<IActionResult> Delete(int? id)

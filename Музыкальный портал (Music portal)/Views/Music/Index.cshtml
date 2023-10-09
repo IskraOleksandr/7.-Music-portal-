@@ -26,8 +26,8 @@
                 <p>Дата публикации: @item.VideoDate</p>
                 @if (Context.Session.GetInt32("Level") == 2 && Context.Session.GetString("Login") != null)
                 {
-                    <a class="a_bt" asp-action="Edit" asp-route-id="@item.Id" id="EditMusicDialog" data_dialog_title="Edit model">Редактировать</a>
-                    <a class="a_bt" asp-action="Delete" asp-route-id="@item.Id" id="DeleteMusicDialog" data_dialog_title="Delete model">Удалить</a>
+                    <a class="a_bt EditMusicDialog" asp-action="Edit" asp-route-id="@item.Id" data_dialog_title="Edit model">Редактировать</a>
+                    <a class="a_bt DeleteMusicDialog" asp-action="Delete" asp-route-id="@item.Id" data_dialog_title="Delete model">Удалить</a>
                 }
             </div>
         </div>
@@ -39,7 +39,7 @@
     <script>
         $(document).ready(function () {
 
-            $("#DeleteMusicDialog").on("click", function (e) {
+            $(".DeleteMusicDialog").on("click", function (e) {
                 e.preventDefault();
 
                 $("<div></div>")
@@ -87,7 +87,7 @@
                     });
             });
 
-            $("#EditMusicDialog").on("click", function (e) {
+            $(".EditMusicDialog").on("click", function (e) {
                 e.preventDefault();
 
                 $("<div id='dialogContent' style='width: 10px'></div>")

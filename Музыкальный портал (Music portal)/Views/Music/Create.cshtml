@@ -3,7 +3,7 @@
 <div class="dv_w" style="margin-left:10px">
     <div class="dv1v dv_w">
         <div class="dv_w">
-            <form asp-action="Create" enctype="multipart/form-data">
+            <form asp-action="Create" asp-controller="Music" method="post" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="UserId" />
                 
@@ -34,7 +34,7 @@
                 <div class="div_l3n dv_w">
                     <div class="div_l4 dv_w">
                         <label asp-for="Video_URL" class="label3"></label>
-                        <input asp-for="Video_URL" class="input_file div_com div_i" style="float:left" type="file" name="Video_URL" id="Video_URL" />
+                        <input asp-for="Video_URL" class="input_file div_com div_i" style="float:left" type="file" name="Video_URL" />
                     </div>
                     <span asp-validation-for="Video_URL" class="span_error dv_w"></span>
                 </div>

@@ -84,37 +84,38 @@
 @section Scripts{
     <script>
         $(document).ready(function () {
-            // $("#AddMusicDialog").on("click", function (e) {
-            //     e.preventDefault();
+            $("#AddMusicDialog").on("click", function (e) {
+                e.preventDefault();
 
-            //     $("<div id='dialogContent' style='width: 10px'></div>")
-            //         .addClass("dialog")
-            //         .appendTo("body")
-            //         .load(this.href)
-            //         .dialog({
-            //             title: "Регистрация",
-            //             close: function () { $(this).remove() },
-            //             dialogClass: 'myTitleClass',
-            //             width: "420px",
-            //             resizable: false,
-            //             modal: true,
-            //             buttons: [{
-            //                 class: "input_subm inp_sub2",
-            //                 text: "Сохранить",
-            //                 click: function () {
-            //                     $.ajax({
-            //                         url: "@Url.Action("Create", "Music")",
-            //                         type: "POST",
-            //                         data: $('form').serialize(),
-            //                         datatype: "json",
-            //                         success: function (result) {
-            //                             $("#dialogContent").html(result);
-            //                         }
-            //                     });
-            //                 }
-            //             }]
-            //         });
-            // });
+                $("<div id='dialogContent' style='width: 10px'></div>")
+                    .addClass("dialog")
+                    .appendTo("body")
+                    .load(this.href)
+                    .dialog({
+                        title: "Регистрация",
+                        close: function () { $(this).remove() },
+                        dialogClass: 'myTitleClass',
+                        width: "420px",
+                        resizable: false,
+                        modal: true,
+                        buttons: [{
+                            class: "input_subm inp_sub2",
+                            text: "Сохранить",
+                            click: function () {
+                                $.ajax({
+                                    url: "@Url.Action("Create", "Music")",
+                                    type: "POST",
+                                    data: $('form').serialize(),
+                                    datatype: "json",
+                                    success: function (result) {
+                                        $("#dialogContent").html(result);
+                                    }
+                                });
+                            }
+                        }]
+                    });
+            });
+
             $(".DeleteUserDialog").on("click", function (e) {
                 e.preventDefault();
 

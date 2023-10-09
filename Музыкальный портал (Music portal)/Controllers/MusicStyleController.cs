@@ -24,7 +24,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
          
         public IActionResult Create()
         {
-            return PartialView();
+            return PartialView("Create");
         }
 
          
@@ -38,7 +38,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
                 await _repository.Save();
                 return PartialView("~/Views/Music/Success.cshtml");
             }
-            return PartialView(style);
+            return PartialView("Create");
         }
 
         
@@ -54,7 +54,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
             {
                 return NotFound();
             }
-            return PartialView(style);
+            return PartialView("Edit", style);
         }
 
          
@@ -87,7 +87,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
                 }
                 return PartialView("~/Views/Music/Success.cshtml");
             }
-            return PartialView(style);
+            return PartialView("Edit", style);
         }
 
          
@@ -104,7 +104,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
                 return NotFound();
             }
 
-            return PartialView(style);
+            return PartialView("Delete", style);
         }
 
 

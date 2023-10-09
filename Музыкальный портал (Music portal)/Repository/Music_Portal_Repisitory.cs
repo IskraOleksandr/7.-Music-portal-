@@ -13,14 +13,12 @@ namespace Музыкальный_портал__Music_portal_.Repository
         }
         public async Task<User> GetUser(string login)
         {
-            var user =  _context.Users.FirstOrDefault(u => u.Login == login);
-            return user;
+            return await _context.Users.FirstOrDefaultAsync(u => u.Login == login);
         }
 
         public async Task<User> GetUserById(int id)
         {
-            var user = await _context.Users.SingleOrDefaultAsync(m => m.Id == id);
-            return user;
+            return await _context.Users.FindAsync(id);
         }
        
         public async Task<List<User>> GetUsers()

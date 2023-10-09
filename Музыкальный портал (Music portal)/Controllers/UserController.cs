@@ -22,7 +22,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
          
         public ActionResult Login()
         {
-            return PartialView();
+            return PartialView("Login");
         }
 
         [HttpPost]
@@ -132,7 +132,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
             {
                 return NotFound();
             }
-            return PartialView(user);
+            return PartialView("Edit", user);
         }
          
         [HttpPost]
@@ -164,7 +164,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
                 }
                 return PartialView("~/Views/Music/Success.cshtml");
             }
-            return PartialView(user);
+            return PartialView("Edit", user);
         }
          
         public async Task<IActionResult> Delete(int? id)
@@ -180,7 +180,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
                 return NotFound();
             }
 
-            return PartialView(user);
+            return PartialView("Delete", user);
         }
          
         [HttpPost, ActionName("Delete")]

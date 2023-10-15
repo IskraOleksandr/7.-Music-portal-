@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-} 
+}
 
 <br>
 <div>
@@ -48,15 +48,14 @@
                     .dialog({
                         title: $(this).attr("data-dialog-title"),
                         close: function () { $(this).remove() },
+                        width: "420px",
                         modal: true
                     })
                     .load(this.href);
             });
 
-
-
             $("#AddMusicDialog").on("click", function (e) {
-                e.preventDefault(); 
+                e.preventDefault();
 
                 $("<div id='dialogContent' style='width: 10px'></div>")
                     .addClass("dialog")
@@ -71,15 +70,31 @@
                         modal: true,
                         buttons: [{
                             class: "input_subm inp_sub2",
-                            text: "Сохранить",
-                            click: function () { 
+                            text: "Добавить",
+                            click: function () {
+                                var files = $("#Video_URL")[0].files;
+                                var formData = new FormData();
+                                formData.append("Video_URL", files[0]);
+
+                                formData.append("Video_Name", $("#Video_Name").val());
+                                formData.append("Album", $("#Album").val());
+                                formData.append("Year", $("#Year").val());
+                                formData.append("VideoDate", $("#VideoDate").val());
+                                formData.append("MusicStyleId", $("#MusicStyleId").val());
+                                formData.append("SingerId", $("#SingerId").val());
+                                formData.append("UserId", $("#UserId").val());
+                                // formData.append("Id", $("#Id").val());
                                 $.ajax({
                                     url: "@Url.Action("Create", "Music")",
                                     type: "POST",
-                                    data: $('form').serialize(),
-                                    datatype: "json",
+                                    data: formData,
+                                    processData: false,
+                                    contentType: false,
                                     success: function (result) {
                                         $("#dialogContent").html(result);
+                                    },
+                                    error: function (x, y, z) {
+                                        alert(x + '\n' + y + '\n' + z);
                                     }
                                 });
                             }
@@ -95,7 +110,7 @@
                     .appendTo("body")
                     .load(this.href)
                     .dialog({
-                        title: "Регистрация",
+                        title: "Редактирование песни",
                         close: function () { $(this).remove() },
                         dialogClass: 'myTitleClass',
                         width: "420px",
@@ -105,11 +120,25 @@
                             class: "input_subm inp_sub2",
                             text: "Сохранить",
                             click: function () {
+                                var formData = new FormData();
+                                var files = $("#Video_URL")[0].files[0];
+                                formData.append("Video_URL", files);
+
+                                formData.append("Video_Name", $("#Video_Name").val());
+                                formData.append("Album", $("#Album").val());
+                                formData.append("Year", $("#Year").val());
+                                formData.append("VideoDate", $("#VideoDate").val());
+                                formData.append("MusicStyleId", $("#MusicStyleId").val());
+                                formData.append("SingerId", $("#SingerId").val());
+                                formData.append("UserId", $("#UserId").val());
+                                formData.append("Id", $("#Id").val());
+
                                 $.ajax({
                                     url: "@Url.Action("Edit", "Music")",
                                     type: "POST",
-                                    data: $('form').serialize(),
-                                    datatype: "json",
+                                    data: formData,
+                                    processData: false,
+                                    contentType: false,
                                     success: function (result) {
                                         $("#dialogContent").html(result);
                                     }
@@ -117,8 +146,7 @@
                             }
                         }]
                     });
-            }); 
-
+            });
 
             $("#RegisterDialog").on("click", function (e) {
                 e.preventDefault();
@@ -183,7 +211,7 @@
                         }]
                     });
             });
-             
+
         });
     </script>
     @{

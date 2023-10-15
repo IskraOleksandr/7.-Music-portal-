@@ -42,7 +42,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Video_Name,Album,Year,Video_URL,VideoDate,MusicStyleId,SingerId,UserId")] Music music, IFormFile Video_URL)
         {
 
@@ -74,10 +74,10 @@ namespace Музыкальный_портал__Music_portal_.Controllers
                         await Video_URL.CopyToAsync(fileStream); // копируем файл в поток
                     }
                     music.Video_URL = "~" + file_path;
+                    await _repository.AddMusic(music);
+                    await _repository.Save();
+                    return PartialView("~/Views/Music/Success.cshtml");
                 }
-
-                await _repository.AddMusic(music);
-                await _repository.Save();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -116,30 +116,31 @@ namespace Музыкальный_портал__Music_portal_.Controllers
 
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Video_Name,Album,Year,Video_URL,VideoDate,MusicStyleId,SingerId,UserId")] Music music, IFormFile Video_URL)
         {
             if (id != music.Id)
                 return NotFound();
 
+            var user_login = HttpContext.Session.GetString("Login");
+
+            if (HttpContext.Session.GetString("Login") == null)
+                return PartialView("~/Views/User/Login.cshtml");
+
+
+            var us = await _repository.GetUser(user_login);
+            music.User = us;
+
+            var style = await _repository.GetMusicStyleById(music.MusicStyleId);
+            music.MusicStyle = style;
+
+            var singer = await _repository.GetSingerById(music.SingerId);
+            music.Singer = singer;
+
+            music.UserId = us.Id;
+            music.VideoDate = DateTime.Now;
             try
             {
-                if (HttpContext.Session.GetString("Login") == null)
-                    return PartialView("~/Views/User/Login.cshtml");
-
-                var user_login = HttpContext.Session.GetString("Login");
-
-                var style = await _repository.GetMusicStyleById(music.MusicStyleId);
-                var singer = await _repository.GetSingerById(music.SingerId);
-                var us = await _repository.GetUser(user_login);
-
-                music.MusicStyle = style;
-                music.Singer = singer;
-                music.User = us;
-
-                music.UserId = us.Id;
-                music.VideoDate = DateTime.Now;
-
                 if (Video_URL != null)
                 {
                     string file_path = "/Music/" + Video_URL.FileName;
@@ -149,15 +150,11 @@ namespace Музыкальный_портал__Music_portal_.Controllers
                         await Video_URL.CopyToAsync(fileStream); // копируем файл в поток
                     }
                     music.Video_URL = "~" + file_path;
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Выберите файл для изменения песни!");
-                    return PartialView();
-                }
 
-                _repository.UpdateMusic(music);
-                await _repository.Save();
+                    _repository.UpdateMusic(music);
+                    await _repository.Save();
+                    return PartialView("~/Views/Music/Success.cshtml");
+                }
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -167,7 +164,7 @@ namespace Музыкальный_портал__Music_portal_.Controllers
                 }
                 else throw;
             }
-            return PartialView("~/Views/Music/Success.cshtml");
+            return PartialView("Edit");
         }
 
         public async Task<IActionResult> Delete(int? id)

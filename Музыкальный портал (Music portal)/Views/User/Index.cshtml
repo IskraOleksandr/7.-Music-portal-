@@ -92,7 +92,7 @@
                     .appendTo("body")
                     .load(this.href)
                     .dialog({
-                        title: "Регистрация",
+                        title: "Добавление песни",
                         close: function () { $(this).remove() },
                         dialogClass: 'myTitleClass',
                         width: "420px",
@@ -102,11 +102,23 @@
                             class: "input_subm inp_sub2",
                             text: "Сохранить",
                             click: function () {
+                                var files = $("#Video_URL")[0].files;
+                                var formData = new FormData();
+                                formData.append("Video_URL", files[0]);
+
+                                formData.append("Video_Name", $("#Video_Name").val());
+                                formData.append("Album", $("#Album").val());
+                                formData.append("Year", $("#Year").val());
+                                formData.append("VideoDate", $("#VideoDate").val());
+                                formData.append("MusicStyleId", $("#MusicStyleId").val());
+                                formData.append("SingerId", $("#SingerId").val());
+                                formData.append("UserId", $("#UserId").val());
                                 $.ajax({
                                     url: "@Url.Action("Create", "Music")",
                                     type: "POST",
-                                    data: $('form').serialize(),
-                                    datatype: "json",
+                                    data: formData,
+                                    processData: false,
+                                    contentType: false,
                                     success: function (result) {
                                         $("#dialogContent").html(result);
                                     }

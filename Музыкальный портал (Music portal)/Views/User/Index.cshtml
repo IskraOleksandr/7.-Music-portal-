@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-} 
+}
 
 <br>
 <div>
@@ -16,7 +16,7 @@
                     <div class="div_l4 wh">
                         <table class="table1">
                             <thead>
-                                <tr >
+                                <tr>
 
                                     <th class="th2">
                                         @Html.DisplayNameFor(model => model.Id)
@@ -75,7 +75,7 @@
                     </div>
                 </div>
                 <br /> <br />
-            </div> 
+            </div>
         </div>
     </div>
 </div>
@@ -135,7 +135,7 @@
                     .addClass("dialog")
                     .appendTo("body")
                     .dialog({
-                        title: "Удаление пользователя" /* $(this).attr("data-dialog-title") */,
+                        title: "Удаление пользователя",
                         close: function () { $(this).remove() },
                         dialogClass: 'myTitleClass',
                         width: "420px",

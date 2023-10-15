@@ -46,7 +46,7 @@
                     .addClass("dialog")
                     .appendTo("body")
                     .dialog({
-                        title: $(this).attr("data-dialog-title"),
+                        title: "Удаление песни",
                         close: function () { $(this).remove() },
                         width: "420px",
                         modal: true
@@ -83,7 +83,6 @@
                                 formData.append("MusicStyleId", $("#MusicStyleId").val());
                                 formData.append("SingerId", $("#SingerId").val());
                                 formData.append("UserId", $("#UserId").val());
-                                // formData.append("Id", $("#Id").val());
                                 $.ajax({
                                     url: "@Url.Action("Create", "Music")",
                                     type: "POST",
@@ -120,9 +119,9 @@
                             class: "input_subm inp_sub2",
                             text: "Сохранить",
                             click: function () {
+                                var files = $("#Video_URL")[0].files;
                                 var formData = new FormData();
-                                var files = $("#Video_URL")[0].files[0];
-                                formData.append("Video_URL", files);
+                                formData.append("Video_URL", files[0]);
 
                                 formData.append("Video_Name", $("#Video_Name").val());
                                 formData.append("Album", $("#Album").val());
@@ -188,7 +187,7 @@
                     .appendTo("body")
                     .load(this.href)
                     .dialog({
-                        title: "Вход"/* $(this).attr("data-dialog-title") */,
+                        title: "Вход",
                         close: function () { $(this).remove() },
                         dialogClass: 'myTitleClass',
                         width: "420px",
